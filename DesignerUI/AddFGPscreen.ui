@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Frame_ContainAddFGPscreen</class>
+ <widget class="QFrame" name="Frame_ContainAddFGPscreen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>429</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Raised</enum>
+  </property>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>8</x>
+     <y>6</y>
+     <width>785</width>
+     <height>417</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(191, 191, 191);
+border-radius:7px</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_utTrai">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>16</y>
+      <width>44</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/finger/utTraiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_nhanTrai">
+    <property name="geometry">
+     <rect>
+      <x>174</x>
+      <y>14</y>
+      <width>52</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/finger/nhanTraiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_giuaTrai">
+    <property name="geometry">
+     <rect>
+      <x>226</x>
+      <y>14</y>
+      <width>48</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/finger/giuaTraiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_troTrai">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>14</y>
+      <width>57</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/finger/troTraiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_caiTrai">
+    <property name="geometry">
+     <rect>
+      <x>322</x>
+      <y>14</y>
+      <width>49</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/finger/caiTraiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_troPhai">
+    <property name="geometry">
+     <rect>
+      <x>438</x>
+      <y>14</y>
+      <width>52</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/fingerRight/troPhaiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_giuaPhai">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>14</y>
+      <width>48</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/fingerRight/giuaPhaiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_caiPhai">
+    <property name="geometry">
+     <rect>
+      <x>386</x>
+      <y>14</y>
+      <width>53</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/fingerRight/caiPhaiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_utPhai">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>16</y>
+      <width>44</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/fingerRight/utPhaiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_nhanPhai">
+    <property name="geometry">
+     <rect>
+      <x>538</x>
+      <y>14</y>
+      <width>52</width>
+      <height>270</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../icon/fingerRight/nhanPhaiTrang.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_containAnoument">
+    <property name="geometry">
+     <rect>
+      <x>72</x>
+      <y>316</y>
+      <width>641</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_forShowNotify">
+     <property name="geometry">
+      <rect>
+       <x>36</x>
+       <y>16</y>
+       <width>563</width>
+       <height>43</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 bold 16pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

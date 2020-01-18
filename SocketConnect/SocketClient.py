@@ -1,0 +1,240 @@
+import socket
+from    datetime                import datetime
+from    PyQt5.QtCore            import pyqtSlot, pyqtSignal,QTimer, QDateTime,Qt, QObject
+import  threading
+from    SocketConnect.ProcessReciptData   import ProcessReciptData
+import  math
+import  time
+from    SocketConnect.FTPclient import FTPclient
+from    GetSettingFromJSON    import GetSetting
+import json
+import  os
+from    SocketConnect.FTPclient    import FTPclient
+
+
+SETTING_DICT                                        = GetSetting.LoadSettingFromFile()
+SERVER_IP                                           = SETTING_DICT["serverIP"]
+SERVER_PORT                                         = int(SETTING_DICT["serverPort"])
+
+MAC                                                 = "1234"
+
+CODE_RECIPT_DATA_FROM_SERVER = "3"
+CODE_UPLOAD_DATA_TO_SERVER = "2"
+CODE_PING_PING = "1"
+
+CODE_SENDED_FINGER_IMAGE = 3
+CODE_SEND_FACE_IMAGE = 4
+
+MAC_ADDRESS                                         = "123456"#[0xC8, 0X93, 0X46, 0X4E,0X5D,0XD9]C8-93-46-4E-5D-D9
+IMAGE_TO_SEND_SERVER_PATH                           = "/StudentRecognize/SocketConnect/"
+FTP_FILE_PATH_TO_UPLOAD                             = GetSetting.GetSetting("--ServerImageDir")
+
+class SocketClient(QObject):
+    
+    __SignalRecreateConnect = pyqtSignal()
+    SignalServerNotConnect = pyqtSignal()
+    SignalServerConnected = pyqtSignal()
+    SignalConnectNewServer = pyqtSignal(dict)
+    SignalConnectNewFTP = pyqtSignal(dict)
+    __SignalConnected = pyqtSignal()
+
+    def __init__(self):
+        super().__init__()
+        self.ftpObj = FTPclient()
+        # self.timerPingPong = QTimer(self)
+        # self.timerPingPong.timeout.connect(self.__PingPong)
+
+        self.__SignalConnected.connect(self.__ServerConnected)
+
+
+        self.processReciptDataObj = ProcessReciptData()
+
+        self.chuaXuLy = b''
+
+        self.TimerWaitForServerConfirm = QTimer(self)
+        self.TimerWaitForServerConfirm.timeout.connect(self.__ThreadCreateConnect)
+        self.TimerWaitForServerConfirm.start(2000)
+
+        self.FlagServerConfirmedForConnect = False
+        self.FlagServerISconnect = False
+        self.clientObj = ""
+        
+        self.ThreadWaitForReciptData()
+        self.__TimerSendPingPong = QTimer(self)
+        self.__TimerSendPingPong.timeout.connect(self.__SendPingPong)
+        self.__SignalRecreateConnect.connect(self.__RecreateConnect)
+        self.__FlagSendPingPong = True
+        self.waitingForConnect = False
+
+    def __ServerConnected(self):
+        try:
+            self.FlagServerISconnect = True
+            self.TimerWaitForServerConfirm.stop()
+            self.ThreadWaitForReciptData()
+            self.timerPingPong.start(30000)
+        except:
+            pass
+    
+    def SendFingerImage(self, nameImage, ngon):
+        dictMessage = {
+            "tenAnh":nameImage,
+            "ngon":ngon
+        }
+        jsonDict = json.dumps(dictMessage)
+        self.__SendDataViaSocket(self.__DungKhungGiaoTiepUART(jsonDict ,CODE_SENDED_FINGER_IMAGE)[0])
+        self.ftpObj.SendImageToFTPserver(nameImage, "/files/FGPimage/"+nameImage)
+
+    def __ThreadCreateConnect(self):
+        if(self.waitingForConnect):
+            return
+        thread = threading.Thread(target=self.CreateConnect, args=(), daemon = True)
+        thread.start()
+
+    def __RecreateConnect(self):
+        self.FlagServerISconnect = False
+        if(not self.TimerWaitForServerConfirm.isActive()):
+            self.TimerWaitForServerConfirm.start(2000)
+
+    def ConnectNewServer(self, serverInfoDict):
+        global SERVER_IP, SERVER_PORT
+        SERVER_IP = serverInfoDict["serverIP"]
+        SERVER_PORT = int(serverInfoDict["serverPort"])
+        self.FlagServerISconnect = False
+        self.CreateConnect()
+
+    def CreateConnect(self):
+        self.waitingForConnect = True
+        global SERVER_IP, SERVER_PORT
+        try:
+            if(not self.FlagServerISconnect):
+                self.clientObj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.clientObj.settimeout(0.5)
+                self.clientObj.setblocking(1)
+                self.clientObj.connect((SERVER_IP, SERVER_PORT))
+                # self.clientObj.send(self.__DungKhungGiaoTiep(MAC_ADDRESS, CLIENT_REQUEST_CONNECT)[0])
+                self.SignalServerConnected.emit()
+                self.__SignalConnected.emit()
+
+        except:
+            self.SignalServerNotConnect.emit()
+            print("khong the ket noi") #test
+            self.FlagServerISconnect = False
+        self.waitingForConnect = False
+
+    def __SendPingPong(self):
+        if(self.__FlagSendPingPong):
+            self.__PingPong()
+        else:
+            self.__FlagSendPingPong = True
+
+    def __SendDataViaSocket(self, data):
+        try:
+            self.clientObj.send(data)
+            self.__FlagSendPingPong = False
+        except:
+            self.FlagServerISconnect
+            self.__SignalRecreateConnect.emit()
+
+    def ThreadWaitForReciptData(self):
+        threadReciptData = threading.Thread(target= self.__ListenResponseFromServer, args=(), daemon= True) 
+        threadReciptData.start()
+
+    def __ListenResponseFromServer(self):
+        while True:
+            try:
+                recvData = self.clientObj.recv(1024)
+                print(recvData)
+                len(recvData)
+                if(recvData == b''):
+                    self.__SignalRecreateConnect.emit()
+                    return
+                else: 
+                    self.__FlagSendPingPong = False
+                    self.__PhanTichKhungNhan(recvData)
+            
+            except:
+                self.__SignalRecreateConnect.emit()
+                return
+                         
+    def __PhanTichKhungNhan(self, khungNhan):
+        try:
+            # if(not self.__CheckSumKhungTruyen(khungNhan)):
+            #     return
+            self.processReciptDataObj.DetermineRequiment(khungNhan)
+                    
+        except:
+            print("khung trong")
+
+    def __CheckSumKhungTruyen(self, frameNhan):
+        # return True ## test
+        try:
+            tong = 0
+            for i in range (3, len(frameNhan) - 1):
+                tong = tong + frameNhan[i]
+            tong = -(~tong) % 256
+
+            if(tong == frameNhan[len(frameNhan)-1]):
+                return True
+            else:
+                return False
+        except:
+            return False
+
+    def __DungKhungGiaoTiepUART(self, noiDung, maLenh):
+        if(type(noiDung) is not str): 
+            return False, False
+        highChieuDaiTen = int(len(noiDung) / 256)
+        lowChieuDaiTen = int(len(noiDung) % 256)
+        khungTruyen = [0x45, 0x54, 0x4D, maLenh, lowChieuDaiTen, highChieuDaiTen]
+        tong = 0x02 + highChieuDaiTen + lowChieuDaiTen
+        j = 0
+        for i in range (len(khungTruyen), len(khungTruyen) + len(noiDung)):
+            khungTruyen.append('')
+            khungTruyen[i] = ord(noiDung[j])
+            tong = tong + ord(noiDung[j])
+            j = j+ 1
+            
+        tong = -(~tong) % 256
+        khungTruyen.append(0x00)
+        khungTruyen[len(khungTruyen)-1] = tong
+        return bytes(khungTruyen), tong
+
+    def __TachCacKhungTruyen(self, duLieu):
+        if(duLieu == b''):
+            return []
+        self.chuaXuLy = self.chuaXuLy + duLieu
+        lstKhungDL = []
+        i = 0
+        while True:
+            if(i == len(self.chuaXuLy)):
+                break
+            if( self.chuaXuLy[i:i+3].__str__().__contains__("ESM")):
+                try:
+                    chieuDaiDl = self.chuaXuLy[i+4] + self.chuaXuLy[i+5] * math.pow(2, 7)
+                    chieuDaiKhung = i + int(chieuDaiDl) + 7
+                    if(chieuDaiKhung + i <= len(self.chuaXuLy)):
+                        lstKhungDL.append(self.chuaXuLy[i:chieuDaiKhung])
+                        self.chuaXuLy = self.chuaXuLy[chieuDaiKhung: len(self.chuaXuLy)]
+                        i = -1
+                    else:
+                        self.chuaXuLy = self.chuaXuLy[i: len(self.chuaXuLy)]
+                        break
+                except NameError as e:
+                    self.chuaXuLy = self.chuaXuLy[i: len(self.chuaXuLy)]
+                    print(e)
+                    break
+            i = i + 1
+        return lstKhungDL
+
+    def __ServerConfirmedConnect(self):
+        self.FlagServerConfirmedForConnect = True
+        self.TimerWaitForServerConfirm.stop()
+        
+    def SendDatabaseCheckFile(self, fileName):
+
+        thread = threading.Thread(target = self.ftpObj.SendImageToFTPserver, args = (fileName, FTP_FILE_PATH_TO_UPLOAD +"/"+fileName), daemon= True)
+        thread.start()
+    
+    def SendDatabaseCheckMessage(self, message):
+        resultFrame = self.__ConvertJsonStringToByteArr(message)
+        self.__SendDataViaSocket(bytes(resultFrame))

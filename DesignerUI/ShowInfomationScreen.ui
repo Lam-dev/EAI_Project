@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Frame</class>
+ <widget class="QFrame" name="Frame">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>429</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Raised</enum>
+  </property>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>6</x>
+     <y>6</y>
+     <width>273</width>
+     <height>415</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(191, 191, 191);
+border-radius:7px</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_forShowImage">
+    <property name="geometry">
+     <rect>
+      <x>32</x>
+      <y>16</y>
+      <width>209</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../.designer/icon/iconImageRepresent.png</pixmap>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QFrame" name="frame_3">
+   <property name="geometry">
+    <rect>
+     <x>288</x>
+     <y>6</y>
+     <width>505</width>
+     <height>415</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(191, 191, 191);
+border-radius:7px</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_VuiLongKiemTraVV">
+    <property name="geometry">
+     <rect>
+      <x>8</x>
+      <y>6</y>
+      <width>493</width>
+      <height>39</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+    </property>
+    <property name="text">
+     <string>VUI LÒNG KIỂM TRA CÁC THÔNG TIN CÁC NHÂN SAU</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_hayBaoChoNhanVienVV">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>40</y>
+      <width>399</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 57 12pt &quot;Ubuntu&quot;;
+color: rgb(255, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>(Hãy thông báo cho nhân viên nếu phát hiện sai sót)</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_4">
+    <property name="geometry">
+     <rect>
+      <x>4</x>
+      <y>80</y>
+      <width>497</width>
+      <height>327</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border-style:solid;
+border-radius:7px;
+border-width:1px;
+border-color: rgb(173, 173, 173);
+</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="Line" name="line">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>36</y>
+       <width>497</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>72</y>
+       <width>497</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>108</y>
+       <width>497</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>144</y>
+       <width>497</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_5">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>180</y>
+       <width>497</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_6">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>216</y>
+       <width>497</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="Line" name="line_7">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>252</y>
+       <width>497</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_hoVaTen">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>165</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px</string>
+     </property>
+     <property name="text">
+      <string>HỌ VÀ TÊN:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_ngaySinh">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>46</y>
+       <width>165</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px</string>
+     </property>
+     <property name="text">
+      <string>NGÀY SINH:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_soCMTND">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>165</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px</string>
+     </property>
+     <property name="text">
+      <string>SỐ CMTND:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_ngayCap">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>116</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px</string>
+     </property>
+     <property name="text">
+      <string>NGÀY CẤP:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_queQuan">
+     <property name="geometry">
+      <rect>
+       <x>8</x>
+       <y>190</y>
+       <width>109</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px</string>
+     </property>
+     <property name="text">
+      <string>QUÊ QUÁN:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_noiCap">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>154</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px</string>
+     </property>
+     <property name="text">
+      <string>NƠI CẤP:</string>
+     </property>
+    </widget>
+    <widget class="Line" name="line_8">
+     <property name="geometry">
+      <rect>
+       <x>-2</x>
+       <y>288</y>
+       <width>497</width>
+       <height>1</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_soDienThoai">
+     <property name="geometry">
+      <rect>
+       <x>8</x>
+       <y>226</y>
+       <width>195</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px</string>
+     </property>
+     <property name="text">
+      <string>SỐ ĐIỆN THOẠI LIÊN HỆ:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_email">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>260</y>
+       <width>195</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px</string>
+     </property>
+     <property name="text">
+      <string>EMAIL:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_forShowName">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>8</y>
+       <width>275</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_forShowDateOfBird">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>44</y>
+       <width>281</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_forShowIDcardNumber">
+     <property name="geometry">
+      <rect>
+       <x>202</x>
+       <y>82</y>
+       <width>275</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_forShowDateOfIDcard">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>116</y>
+       <width>277</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_IDcardPlace">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>150</y>
+       <width>279</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_forShowComeFrom">
+     <property name="geometry">
+      <rect>
+       <x>202</x>
+       <y>188</y>
+       <width>283</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>224</y>
+       <width>285</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_forShowEmail">
+     <property name="geometry">
+      <rect>
+       <x>198</x>
+       <y>260</y>
+       <width>289</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 0px;
+font: 57 bold 12pt &quot;Ubuntu&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
