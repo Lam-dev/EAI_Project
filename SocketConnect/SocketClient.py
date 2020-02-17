@@ -18,12 +18,10 @@ SERVER_PORT                                         = int(SETTING_DICT["serverPo
 
 MAC                                                 = "1234"
 
-CODE_RECIPT_DATA_FROM_SERVER = "3"
-CODE_UPLOAD_DATA_TO_SERVER = "2"
-CODE_PING_PING = "1"
+CODE_SEND_FGP_FEATURE                 = 5
 
-CODE_SENDED_FINGER_IMAGE = 3
-CODE_SEND_FACE_IMAGE = 4
+CODE_SENDED_FINGER_IMAGE              = 3
+CODE_SEND_FACE_IMAGE                  = 4
 
 MAC_ADDRESS                                         = "123456"#[0xC8, 0X93, 0X46, 0X4E,0X5D,0XD9]C8-93-46-4E-5D-D9
 IMAGE_TO_SEND_SERVER_PATH                           = "/StudentRecognize/SocketConnect/"
@@ -66,6 +64,27 @@ class SocketClient(QObject):
         self.__FlagSendPingPong = True
         self.waitingForConnect = False
 
+    def SendTakedImage(self, featureStr = ""):
+        self.ftpObj.SendImageToFTPserver("imageToSend.jpg", "/files/FGPimage/"+"faceImage.jpg")
+        if(featureStr == ""):
+            findFace = False
+        else:
+            findFace = True
+
+        dictData = {
+            "faceFeature":featureStr
+        }
+        with open('FaceFeatureFileToSend.txt', 'w') as outfile:
+            json.dump(dictData, outfile)
+        self.ftpObj.SendImageToFTPserver('FaceFeatureFileToSend.txt', "/files/FGPimage/"+'FaceFeatureFileToSend.txt')
+        os.remove('FaceFeatureFileToSend.txt')
+
+        dictMessage = {
+            "containFace":findFace,
+        }
+        jsonStr = json.dumps(dictMessage)
+        self.__SendDataViaSocket(self.__DungKhungGiaoTiepUART(jsonStr, CODE_SEND_FACE_IMAGE)[0])
+
     def __ServerConnected(self):
         try:
             self.FlagServerISconnect = True
@@ -75,6 +94,22 @@ class SocketClient(QObject):
         except:
             pass
     
+    def SendFingerFeature(self, featureStr, fingerName):
+        dictMessage = {
+            "fingerName":fingerName,
+        }
+        jsonMessage = json.dumps(dictMessage)
+        dictData = {
+            "fingerName":fingerName,
+            "feature":featureStr
+        }
+        with open('FGPfeatureFileToSend.txt', 'w') as outfile:
+            json.dump(dictData, outfile)
+        self.ftpObj.SendImageToFTPserver('FGPfeatureFileToSend.txt', "/files/FGPimage/"+'FGPfeatureFileToSend.txt')
+        os.remove('FGPfeatureFileToSend.txt')
+        self.__SendDataViaSocket(self.__DungKhungGiaoTiepUART(jsonMessage ,CODE_SEND_FGP_FEATURE)[0])
+        
+
     def SendFingerImage(self, nameImage, ngon):
         dictMessage = {
             "tenAnh":nameImage,
@@ -131,7 +166,7 @@ class SocketClient(QObject):
         try:
             self.clientObj.send(data)
             self.__FlagSendPingPong = False
-        except:
+        except NameError:
             self.FlagServerISconnect
             self.__SignalRecreateConnect.emit()
 
@@ -210,7 +245,7 @@ class SocketClient(QObject):
                 break
             if( self.chuaXuLy[i:i+3].__str__().__contains__("ESM")):
                 try:
-                    chieuDaiDl = self.chuaXuLy[i+4] + self.chuaXuLy[i+5] * math.pow(2, 7)
+                    chieuDaiDl = self.chuaXuLy[i+4] + self.chuaXuLy[i+5] * math.pow(2, 8)
                     chieuDaiKhung = i + int(chieuDaiDl) + 7
                     if(chieuDaiKhung + i <= len(self.chuaXuLy)):
                         lstKhungDL.append(self.chuaXuLy[i:chieuDaiKhung])

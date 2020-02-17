@@ -31,13 +31,17 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         self.currentStep = 1
 
         self.socketObj = SocketClient()
-
         self.socketObj.processReciptDataObj.SignalGoToAddFGP.connect(self.GoToAddFGPscreen)
         self.socketObj.processReciptDataObj.SignalGoToAddFace.connect(self.GoToAddFaceScreen)
         self.socketObj.processReciptDataObj.SignalShowInformation.connect(self.GoToShowInfomation)
 
         self.addFGPscreenObj.SignalSendImageToServer.connect(self.socketObj.SendFingerImage)
-    
+        self.addFGPscreenObj.SignalSendFGPGetToServer.connect(self.socketObj.SendFingerFeature)
+
+        self.addFaceScreenObj.SignalPictureTaked.connect(self.socketObj.SendTakedImage)
+
+
+
     def GoToAddFGPscreen(self, strMessage):
         if(self.currentStep == 1):
             self.addFGPscreenObj.ShowStepStudentInformationAnim(self.frameContainShowInfo)
@@ -51,6 +55,8 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
             self.addFaceScreenObj.cameraObj.StopReadImage()
             # self.addFGPscreenObj.ListFingerNeedAdd(strMessage)
             # self.addFGPscreenObj.GetFGP()
+        
+
             
     def GoToAddFaceScreen(self):
         if(self.currentStep == 2):
@@ -61,6 +67,9 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         if(self.currentStep == 1):
             self.addFaceScreenObj.ShowStepStudentInformationAnim(self.frameContainShowInfo)
             self.currentStep = 3 
+        
+        if(self.currentStep == 3):
+            self.addFaceScreenObj.RetakePicture()
 
     def GoToShowInfomation(self, inforString):
         self.showInfoScreenObj.ShowInformation(inforString)

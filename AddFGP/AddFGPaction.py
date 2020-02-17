@@ -7,6 +7,7 @@ from FingerPrintSensor.FingerPrint   import Fingerprint
 
 class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
     SignalSendImageToServer = pyqtSignal(str, str)
+    SignalSendFGPGetToServer = pyqtSignal(str, str)
     def __init__(self, frameContain):
         QObject.__init__(self)
         Ui_Frame_ContainAddFGPscreen.__init__(self)
@@ -53,7 +54,8 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
 
 
         self.fingerprintObj = Fingerprint()
-        self.fingerprintObj.SignalDowloadedImage.connect(self.FGPdownloaded)
+        self.fingerprintObj.SignalFGPputOnIsTheSame.connect(self.ShowFGPisTheSameWithPre)
+        self.fingerprintObj.SignalFGPget.connect(self.FGPget)
 
         self.imageObjNeedFlipFlop = False
 
@@ -67,6 +69,25 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
         self.__strNameFingerNeedAdd = ""
         self.__fingerNeedAddWhite = ""
         self.__fingerNeedAddGreen = ""
+        self.__FGPgetPercent = 0
+        self.__lstFGPofAfinger = []
+        self.__lstFGPofAfingerStr = ""
+        self.__nameOfFingerAdding = ""
+        
+    def FGPget(self, FGPfeature):
+        self.__FGPgetPercent += 25
+        self.label_forShowFGPpercent.setText(str(self.__FGPgetPercent) + "%")
+        self.__lstFGPofAfinger.append(FGPfeature)
+        if(self.__FGPgetPercent == 100):
+            self.__FGPgetPercent = 0
+            self.label_forShowFGPpercent.setText(str(self.__FGPgetPercent) + "%")
+            self.StopAll()
+            __lstFGPofAfingerStr = ";".join(self.__lstFGPofAfinger)
+            self.SignalSendFGPGetToServer.emit(__lstFGPofAfingerStr, self.__nameOfFingerAdding)
+            self.GetFGP()
+
+    def ShowFGPisTheSameWithPre(self):
+        pass
 
     def FGPdownloaded(self, imageName):
         self.SignalSendImageToServer.emit(imageName, self.__strNameFingerNeedAdd)
@@ -91,17 +112,17 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
             self.fingerNeedingAddIsWhite = True
 
     def StopAll(self):
-        self.fingerprintObj.StopDownloadImage()
+        self.fingerprintObj.StopGetFGP()
         self.timerFlipFlop.stop()
 
     def GetFGP(self):
+        self.fingerprintObj.ClearFGPfeatureSaveOnSensor()
         if(self.lstFingerNeedAdd.__len__() == 0):
-            self.fingerprintObj.StopDownloadImage()
-            self.timerFlipFlop.stop()
+            self.StopAll()
             return
-        nameFinger = self.lstFingerNeedAdd.pop()
-        self.ShowFingerPutNotify(nameFinger)
-        self.fingerprintObj.StartDownloadImage()
+        self.__nameOfFingerAdding = self.lstFingerNeedAdd.pop()
+        self.ShowFingerPutNotify(self.__nameOfFingerAdding)
+        self.fingerprintObj.StartGetFGP()
         self.timerFlipFlop.start(1000)
 
     def ShowFingerNeedAdd(self, fingerName):

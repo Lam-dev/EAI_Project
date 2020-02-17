@@ -3,6 +3,7 @@ from PyQt5          import QtCore, QtGui
 from PyQt5.QtCore   import pyqtSlot, pyqtSignal,QTimer, QDateTime, Qt, QObject, QPointF, QPropertyAnimation, pyqtProperty, QSize
 from PyQt5          import QtWidgets
 import json
+from SocketConnect.FTPclient   import FTPclient
 
 class ShowInfoScreen(QObject, Ui_Frame):
     def __init__(self, frameContain):
@@ -11,7 +12,9 @@ class ShowInfoScreen(QObject, Ui_Frame):
         self.frameContainCurrentStep = frameContain
         self.frameContainCurrentStep.show()
         self.setupUi(frameContain)
-    
+        self.label_forShowImage.setPixmap(QtGui.QPixmap("icon/iconImageRepresent.png"))
+        self.ftpObj = FTPclient()
+
     def ShowInformation(self, infoObj):
         inforDict = json.loads(infoObj)
         self.label_forShowName.setText(inforDict["ten"])
@@ -20,6 +23,7 @@ class ShowInfoScreen(QObject, Ui_Frame):
         self.label_forShowComeFrom.setText(inforDict["que"])
         self.label_forShowIDcardNumber.setText(inforDict["sdt"])
         self.label_forShowEmail.setText(inforDict["email"])
+        self.ftpObj.GetFileFromFTPserver("IDimage.jpg")
 
 
     def ShowStepStudentInformationAnim(self, frameOfPreStep):

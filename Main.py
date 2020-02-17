@@ -3,7 +3,7 @@ from PyQt5.QtCore import QDateTime, QObject, Qt, QTimer, pyqtSignal, pyqtSlot
 from MainScreen.MainScreenAction   import MainScreen
 
 
-class MainWindowContent(QObject):
+class MainWindowContent(QObject):  
     def __init__(self, MainWindow):
         super(self.__class__, self).__init__()
         self.centralwidget = QtWidgets.QWidget(MainWindow)

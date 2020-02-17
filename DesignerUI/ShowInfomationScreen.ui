@@ -42,7 +42,7 @@ border-radius:7px</string>
     <property name="geometry">
      <rect>
       <x>32</x>
-      <y>16</y>
+      <y>68</y>
       <width>209</width>
       <height>261</height>
      </rect>

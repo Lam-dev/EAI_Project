@@ -33,6 +33,7 @@ FTP_ACCOUNT  =  SETTING_DICT["ftpAccount"]
 FTP_PASSWORD =  SETTING_DICT["ftpPassword"]
 
 LOCAL_PATH_CONTAIN_DATA_UPDATE = "DataUpdate/"
+LOCAL_PATH_CONTAIN_ID_IMAGE = "IDimage/"
 FTP_SERVER_DOWLOAD_IMAGE_FILE_PATH = "syncimage/"
 
 class FTPclient(QObject):
@@ -92,7 +93,13 @@ class FTPclient(QObject):
             return
         fp.close()
                 
-
+    def GetFileFromFTPserver(self, fileName, ftpFilePath = FTP_SERVER_DOWLOAD_IMAGE_FILE_PATH):
+        self.ftpObj.cwd(ftpFilePath)
+        try:
+            self.ftpObj.retrbinary("RETR " + fileName ,open(LOCAL_PATH_CONTAIN_DATA_UPDATE + "image.jpg", 'wb').write)
+        except Exception as e:
+            print(e.args)
+            pass
 # x = FTPclient()
 # x.GetListStudentImage("/files/")
 # x.SendImageToFTPserver("/home/lam/AppLoadXml/aaa.jpg", "files/aaa.jpg")

@@ -41,7 +41,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_utTrai">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>68</x>
       <y>16</y>
       <width>44</width>
       <height>270</height>
@@ -57,7 +57,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_nhanTrai">
     <property name="geometry">
      <rect>
-      <x>174</x>
+      <x>112</x>
       <y>14</y>
       <width>52</width>
       <height>270</height>
@@ -73,7 +73,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_giuaTrai">
     <property name="geometry">
      <rect>
-      <x>226</x>
+      <x>164</x>
       <y>14</y>
       <width>48</width>
       <height>270</height>
@@ -89,7 +89,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_troTrai">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>208</x>
       <y>14</y>
       <width>57</width>
       <height>270</height>
@@ -105,7 +105,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_caiTrai">
     <property name="geometry">
      <rect>
-      <x>322</x>
+      <x>260</x>
       <y>14</y>
       <width>49</width>
       <height>270</height>
@@ -121,7 +121,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_troPhai">
     <property name="geometry">
      <rect>
-      <x>438</x>
+      <x>376</x>
       <y>14</y>
       <width>52</width>
       <height>270</height>
@@ -137,7 +137,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_giuaPhai">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>428</x>
       <y>14</y>
       <width>48</width>
       <height>270</height>
@@ -156,7 +156,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_caiPhai">
     <property name="geometry">
      <rect>
-      <x>386</x>
+      <x>324</x>
       <y>14</y>
       <width>53</width>
       <height>270</height>
@@ -172,7 +172,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_utPhai">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>528</x>
       <y>16</y>
       <width>44</width>
       <height>270</height>
@@ -188,7 +188,7 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_nhanPhai">
     <property name="geometry">
      <rect>
-      <x>538</x>
+      <x>476</x>
       <y>14</y>
       <width>52</width>
       <height>270</height>
@@ -204,9 +204,9 @@ border-radius:7px</string>
    <widget class="QFrame" name="frame_containAnoument">
     <property name="geometry">
      <rect>
-      <x>72</x>
+      <x>8</x>
       <y>316</y>
-      <width>641</width>
+      <width>625</width>
       <height>80</height>
      </rect>
     </property>
@@ -235,6 +235,23 @@ border-radius:7px</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label_forShowFGPpercent">
+    <property name="geometry">
+     <rect>
+      <x>604</x>
+      <y>8</y>
+      <width>173</width>
+      <height>97</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 170, 0);
+font: 75 58pt &quot;Ubuntu&quot;;</string>
+    </property>
+    <property name="text">
+     <string>0%</string>
+    </property>
    </widget>
   </widget>
  </widget>

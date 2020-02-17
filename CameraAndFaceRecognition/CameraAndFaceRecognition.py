@@ -17,12 +17,13 @@ class GetImageFromCamera(QObject):
     PixmapFromCamera = pyqtSignal(QPixmap)
     SignalHideCamera = pyqtSignal()
 
-    def __init__(self, frameCut = ((180, 460), (0, 480)), size = (300, 300), scale = 0.4, time = 50, labelObject = ""):
+    def __init__(self, frameCut = ((0, 480), (0, 640)), size = (400, 650), scale = 1, time = 50, labelObject = ""):
         super().__init__()
         self.cameraObj = Camera_Object
         self.frameCut = frameCut
         self.scale = scale
         self.time = time
+        self.size = size
         self.toBeReadImage = False
         self.timerReadImage = QTimer(self)
         self.timerReadImage.timeout.connect(self.__GetImageFromCamera)
@@ -32,6 +33,10 @@ class GetImageFromCamera(QObject):
     def __ThreadReadCamera(self):
         threadReadCam = threading.Thread(target= self.__GetImageFromCamera, args=(), daemon=True)
         threadReadCam.start()
+
+    def ClearFaceLocation(self):
+        global FaceLocationInImage
+        FaceLocationInImage = False
 
     def __GetImageFromCamera(self):
         global frame
@@ -46,8 +51,8 @@ class GetImageFromCamera(QObject):
             self.CanNotConnectCamera.emit()
             time.sleep(1000)
         else:
-            frame = frame[self.frameCut[1][0]:self.frameCut[1][1], self.frameCut[0][0]:self.frameCut[0][1]]
-            frame = cv2.resize(frame, (0, 0), fx = self.scale, fy = self.scale)
+            # frame = frame[self.frameCut[1][0]:self.frameCut[1][1], self.frameCut[0][0]:self.frameCut[0][1]]
+            # frame = cv2.resize(frame, (0, 0), fx = self.scale, fy = self.scale)
             if(type(FaceLocationInImage) is not bool):
                 # for (top, right, bottom, left) in FaceLocationInImage[0]:
                 top = FaceLocationInImage[0][0]
@@ -61,13 +66,42 @@ class GetImageFromCamera(QObject):
                                             QtGui.QImage.Format_RGB888)
             convertToQtFormat = QtGui.QPixmap.fromImage(convertToQtFormat)
             pixmap = QPixmap(convertToQtFormat)
-            resizeImage = pixmap.scaled(280, 480, QtCore.Qt.KeepAspectRatio)
+            resizeImage = pixmap.scaled(self.size[0], self.size[1], QtCore.Qt.KeepAspectRatio)
             self.PixmapFromCamera.emit(resizeImage)
             # time.sleep(0.05)
             # if(not self.toBeReadImage):
             #     return
-           
-      
+
+    def __DetectFaceInImage(self, image):
+        faceLocInImage = face_recognition.face_locations(image)
+        if(len(faceLocInImage) == 0):
+            return False
+        else:
+            return faceLocInImage
+
+    def FaceTracking(self):
+        global frame
+        global FaceLocationInImage
+        global NumberFrameNotFace
+        if(type(frame) is bool):
+            return
+        localFrame = frame
+        # self.imageDetectFace = localFrame[:, :, ::-1]
+        FaceLocationInImage = self.__DetectFaceInImage(localFrame)
+        self.__GetImageFromCamera()
+        NumberFrameNotFace = 0
+        cv2.imwrite("imageToSend.jpg", frame)
+    
+    def GetFaceFeature(self):
+        global frame
+        global FaceLocationInImage
+        if(type(FaceLocationInImage) is not bool):
+            faceEncodings = face_recognition.face_encodings(frame, FaceLocationInImage)
+        else:
+            faceEncodings = []
+        return faceEncodings
+
+
     def StopReadImage(self):
         self.timerReadImage.stop()
 
@@ -78,7 +112,7 @@ class GetImageFromCamera(QObject):
         #     self.toBeReadImage = True
         #     self.threadGetImageFromCamera = threading.Thread(target= self.__GetImageFromCamera, args=(), daemon=True)
         #     self.threadGetImageFromCamera.start()
-        
+    
 
 class FaceRecognition(QObject):
     NoFace = pyqtSignal()
@@ -134,6 +168,8 @@ class FaceRecognition(QObject):
         else:
             return faceLocInImage
 
+
+
     def FaceTracking(self):
         global frame
         global FaceLocationInImage
@@ -143,11 +179,7 @@ class FaceRecognition(QObject):
         localFrame = frame
         # self.imageDetectFace = localFrame[:, :, ::-1]
         FaceLocationInImage = self.__DetectFaceInImage(localFrame)
-
-        if(type(FaceLocationInImage) is bool):
-            if(NumberFrameNotFace < 2):
-                NumberFrameNotFace += 1
-            return
+        self.__GetImageFromCamera()
         NumberFrameNotFace = 0
         
         # self.FaceRecognition()

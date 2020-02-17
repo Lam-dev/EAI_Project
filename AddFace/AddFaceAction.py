@@ -5,6 +5,9 @@ from PyQt5          import QtWidgets
 from CameraAndFaceRecognition.CameraAndFaceRecognition   import GetImageFromCamera
 
 class AddFaceScreen(QObject, Ui_Frame_containAddFaceScreen):
+
+    SignalPictureTaked = pyqtSignal(str)
+    
     def __init__(self, frameContain):
         QObject.__init__(self)
         Ui_Frame_containAddFaceScreen.__init__(self)
@@ -12,8 +15,38 @@ class AddFaceScreen(QObject, Ui_Frame_containAddFaceScreen):
         self.setupUi(frameContain)
         self.cameraObj = GetImageFromCamera()
         self.cameraObj.PixmapFromCamera.connect(self.ShowCameraImage)
+        self.TimerCountdownTakePictureTime = QTimer(self)
+        self.TimerCountdownTakePictureTime.timeout.connect(self.TakeAPicture)
+        self.__timeCountdown = 3
+        self.__pictureTaked = False
 
+    def TakeAPicture(self):
+        self.__timeCountdown = self.__timeCountdown - 1
+        self.label_forShowTimeCountdown.setText(str(self.__timeCountdown))
+        if(self.__timeCountdown == 0):
+            self.__pictureTaked = True
+            self.TimerCountdownTakePictureTime.stop()
+            self.cameraObj.StopReadImage()
+            self.cameraObj.FaceTracking()
+            faceFeatures = self.cameraObj.GetFaceFeature()
+            if(len(faceFeatures) == 1):
+                faceFeatureStrElem = [str(elem) for elem in faceFeatures[0]]
+                faceFeatureStr = ",".join(faceFeatureStrElem)
+            else:
+                faceFeatureStr = ""
+            self.SignalPictureTaked.emit(faceFeatureStr)
+
+    def RetakePicture(self):
+        if(self.__pictureTaked):
+            self.__pictureTaked = False
+            self.__timeCountdown = 3
+            self.cameraObj.ClearFaceLocation()
+            self.cameraObj.StartReadImage()
+            self.TimerCountdownTakePictureTime.start(1000)
+
+        
     def StartCamera(self):
+        self.TimerCountdownTakePictureTime.start(1000)
         self.cameraObj.StartReadImage()
     
     def ShowCameraImage(self, pixmap):
