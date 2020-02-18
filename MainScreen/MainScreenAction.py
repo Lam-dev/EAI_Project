@@ -40,8 +40,6 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
 
         self.addFaceScreenObj.SignalPictureTaked.connect(self.socketObj.SendTakedImage)
 
-
-
     def GoToAddFGPscreen(self, strMessage):
         if(self.currentStep == 1):
             self.addFGPscreenObj.ShowStepStudentInformationAnim(self.frameContainShowInfo)
@@ -52,12 +50,11 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         if(self.currentStep == 3):
             self.addFGPscreenObj.ShowStepStudentInformationAnim(self.frameContainAddFace)
             self.currentStep = 2
-            self.addFaceScreenObj.cameraObj.StopReadImage()
+            #self.addFaceScreenObj.cameraObj.StopReadImage()
+            self.addFaceScreenObj.StopTakePicture()
             # self.addFGPscreenObj.ListFingerNeedAdd(strMessage)
             # self.addFGPscreenObj.GetFGP()
         
-
-            
     def GoToAddFaceScreen(self):
         if(self.currentStep == 2):
             self.addFaceScreenObj.ShowStepStudentInformationAnim(self.frameContainAddFGP)
@@ -80,6 +77,6 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
 
         if(self.currentStep == 3):
             self.showInfoScreenObj.ShowStepStudentInformationAnim(self.frameContainAddFace)
-            self.addFaceScreenObj.cameraObj.StopReadImage()
+            self.addFaceScreenObj.StopTakePicture()
             self.currentStep = 1
             

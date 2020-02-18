@@ -20,6 +20,14 @@ class AddFaceScreen(QObject, Ui_Frame_containAddFaceScreen):
         self.__timeCountdown = 3
         self.__pictureTaked = False
 
+    def StopTakePicture(self):
+        self.TimerCountdownTakePictureTime.stop()
+        self.__pictureTaked = False
+        self.__timeCountdown = 3
+        self.cameraObj.StopReadImage()
+
+        
+
     def TakeAPicture(self):
         self.__timeCountdown = self.__timeCountdown - 1
         self.label_forShowTimeCountdown.setText(str(self.__timeCountdown))

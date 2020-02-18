@@ -97,6 +97,8 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
     def ListFingerNeedAdd(self, strData):
         dataObj = json.loads(strData)
         listKey = list(dataObj.keys())
+        self.ClearAllFingerNeedAddPre()
+        self.lstFingerNeedAdd.clear()
 
         for key in listKey:
             if(dataObj[key]):
@@ -123,7 +125,19 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
         self.__nameOfFingerAdding = self.lstFingerNeedAdd.pop()
         self.ShowFingerPutNotify(self.__nameOfFingerAdding)
         self.fingerprintObj.StartGetFGP()
-        self.timerFlipFlop.start(1000)
+        self.timerFlipFlop.start(500)
+    
+    def ClearAllFingerNeedAddPre(self):
+        self.label_utTrai.setPixmap(self.__pixmapUtTraiTrang)
+        self.label_nhanTrai.setPixmap(self.__pixmapNhanTraiTrang)
+        self.label_giuaTrai.setPixmap(self.__pixmapGiuaTraiTrang)
+        self.label_troTrai.setPixmap(self.__pixmapTroTraiTrang)
+        self.label_caiTrai.setPixmap(self.__pixmapCaiTraiTrang)
+        self.label_caiPhai.setPixmap(self.__pixmapCaiPhaiTrang)
+        self.label_troPhai.setPixmap(self.__pixmapTroPhaiTrang)
+        self.label_giuaPhai.setPixmap(self.__pixmapGiuaPhaiTrang)
+        self.label_nhanPhai.setPixmap(self.__pixmapNhanPhaiTrang)
+        self.label_utPhai.setPixmap(self.__pixmapUtPhaiTrang)
 
     def ShowFingerNeedAdd(self, fingerName):
         if(fingerName == "utTrai"):

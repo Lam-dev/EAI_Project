@@ -23,7 +23,7 @@ class ShowInfoScreen(QObject, Ui_Frame):
         self.label_forShowComeFrom.setText(inforDict["que"])
         self.label_forShowIDcardNumber.setText(inforDict["sdt"])
         self.label_forShowEmail.setText(inforDict["email"])
-        self.ftpObj.GetFileFromFTPserver("IDimage.jpg")
+        # self.ftpObj.GetFileFromFTPserver("IDimage.jpg")
 
 
     def ShowStepStudentInformationAnim(self, frameOfPreStep):
