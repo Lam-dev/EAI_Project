@@ -151,7 +151,7 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
         elif(fingerName == "caiTrai"):
             self.label_caiTrai.setPixmap(self.__pixmapCaiTraiXanh)
         elif(fingerName == "caiPhai"):
-            self.label_caiPhai.setPixmap(self.__pixmapGiuaPhaiXanh)
+            self.label_caiPhai.setPixmap(self.__pixmapCaiPhaiXanh)
         elif(fingerName == "troPhai"):
             self.label_troPhai.setPixmap(self.__pixmapTroPhaiXanh)
         elif(fingerName == "giuaPhai"):

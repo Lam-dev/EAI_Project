@@ -65,7 +65,8 @@ class SocketClient(QObject):
         self.waitingForConnect = False
 
     def SendTakedImage(self, featureStr = ""):
-        self.ftpObj.SendImageToFTPserver("imageToSend.jpg", "/files/FGPimage/"+"faceImage.jpg")
+        imageNameToServer = "face"+datetime.now().strftime("%Y%m%d%H%M%S")
+        self.ftpObj.SendImageToFTPserver("imageToSend.jpg", "/files/FGPimage/"+ imageNameToServer +".jpg")
         if(featureStr == ""):
             findFace = False
         else:
@@ -76,11 +77,13 @@ class SocketClient(QObject):
         }
         with open('FaceFeatureFileToSend.txt', 'w') as outfile:
             json.dump(dictData, outfile)
-        self.ftpObj.SendImageToFTPserver('FaceFeatureFileToSend.txt', "/files/FGPimage/"+'FaceFeatureFileToSend.txt')
+
+        self.ftpObj.SendImageToFTPserver('FaceFeatureFileToSend.txt', "/files/FGPimage/"+imageNameToServer+'.txt')
         os.remove('FaceFeatureFileToSend.txt')
 
         dictMessage = {
             "containFace":findFace,
+            "imageName":imageNameToServer,
         }
         jsonStr = json.dumps(dictMessage)
         self.__SendDataViaSocket(self.__DungKhungGiaoTiepUART(jsonStr, CODE_SEND_FACE_IMAGE)[0])
@@ -95,8 +98,10 @@ class SocketClient(QObject):
             pass
     
     def SendFingerFeature(self, featureStr, fingerName):
+        FGPfileNameToServer = "FGP"+datetime.now().strftime("%Y%m%d%H%M%S")
         dictMessage = {
             "fingerName":fingerName,
+            "fileName":FGPfileNameToServer
         }
         jsonMessage = json.dumps(dictMessage)
         dictData = {
@@ -105,7 +110,7 @@ class SocketClient(QObject):
         }
         with open('FGPfeatureFileToSend.txt', 'w') as outfile:
             json.dump(dictData, outfile)
-        self.ftpObj.SendImageToFTPserver('FGPfeatureFileToSend.txt', "/files/FGPimage/"+'FGPfeatureFileToSend.txt')
+        self.ftpObj.SendImageToFTPserver('FGPfeatureFileToSend.txt', "/files/FGPimage/"+FGPfileNameToServer+'.txt')
         os.remove('FGPfeatureFileToSend.txt')
         self.__SendDataViaSocket(self.__DungKhungGiaoTiepUART(jsonMessage ,CODE_SEND_FGP_FEATURE)[0])
         

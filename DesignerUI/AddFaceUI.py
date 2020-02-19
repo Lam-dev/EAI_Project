@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Frame_containAddFaceScreen(object):
     def setupUi(self, Frame_containAddFaceScreen):
         Frame_containAddFaceScreen.setObjectName("Frame_containAddFaceScreen")
-        Frame_containAddFaceScreen.resize(800, 429)
+        Frame_containAddFaceScreen.resize(801, 429)
         Frame_containAddFaceScreen.setFrameShape(QtWidgets.QFrame.StyledPanel)
         Frame_containAddFaceScreen.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame = QtWidgets.QFrame(Frame_containAddFaceScreen)
@@ -24,15 +24,17 @@ class Ui_Frame_containAddFaceScreen(object):
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.label_forShowCamera = QtWidgets.QLabel(self.frame)
-        self.label_forShowCamera.setGeometry(QtCore.QRect(20, 16, 529, 309))
+        self.label_forShowCamera.setGeometry(QtCore.QRect(52, 16, 529, 309))
         self.label_forShowCamera.setText("")
         self.label_forShowCamera.setObjectName("label_forShowCamera")
         self.label_nhinVaoCamera = QtWidgets.QLabel(self.frame)
-        self.label_nhinVaoCamera.setGeometry(QtCore.QRect(84, 354, 375, 49))
-        self.label_nhinVaoCamera.setStyleSheet("font: 75 bold 14pt \"Ubuntu\";")
+        self.label_nhinVaoCamera.setGeometry(QtCore.QRect(106, 354, 435, 49))
+        self.label_nhinVaoCamera.setStyleSheet("color: rgb(198, 0, 0);\n"
+"font: 75 bold 16pt \"Ubuntu\";")
+        self.label_nhinVaoCamera.setAlignment(QtCore.Qt.AlignCenter)
         self.label_nhinVaoCamera.setObjectName("label_nhinVaoCamera")
         self.label_forShowTimeCountdown = QtWidgets.QLabel(self.frame)
-        self.label_forShowTimeCountdown.setGeometry(QtCore.QRect(634, 120, 73, 123))
+        self.label_forShowTimeCountdown.setGeometry(QtCore.QRect(654, 120, 73, 123))
         self.label_forShowTimeCountdown.setStyleSheet("font: 57 bold 80pt \"Ubuntu\";\n"
 "color: rgb(0, 170, 127);")
         self.label_forShowTimeCountdown.setObjectName("label_forShowTimeCountdown")

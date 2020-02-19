@@ -32,14 +32,17 @@ class Ui_Frame_containMainWindow(object):
         self.label_logo = QtWidgets.QLabel(self.frame_containLogoAndDeviceName)
         self.label_logo.setGeometry(QtCore.QRect(658, 6, 141, 37))
         self.label_logo.setText("")
-
+        self.label_logo.setPixmap(QtGui.QPixmap("../../Desktop/EcotekProject/TheoryFaceRecognition/icon/iconEcotek.png"))
         self.label_logo.setObjectName("label_logo")
         self.pushButton_shutdown = QtWidgets.QPushButton(self.frame_containLogoAndDeviceName)
         self.pushButton_shutdown.setGeometry(QtCore.QRect(6, 0, 57, 49))
         self.pushButton_shutdown.setStyleSheet("border-style:solid;\n"
 "border-radius:5px;")
         self.pushButton_shutdown.setText("")
-
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../icon/shutdown.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.pushButton_shutdown.setIcon(icon)
+        self.pushButton_shutdown.setIconSize(QtCore.QSize(40, 40))
         self.pushButton_shutdown.setObjectName("pushButton_shutdown")
         self.frame = QtWidgets.QFrame(Frame_containMainWindow)
         self.frame.setGeometry(QtCore.QRect(0, 50, 800, 429))

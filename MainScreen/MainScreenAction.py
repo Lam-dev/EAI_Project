@@ -14,7 +14,11 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         Ui_Frame_containMainWindow.__init__(self)
 
         self.setupUi(frameContainMainScreen)
-
+        self.label_logo.setPixmap(QtGui.QPixmap("icon/iconEcotek.png"))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon/shutdown.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.pushButton_shutdown.setIcon(icon)
+        self.pushButton_shutdown.setIconSize(QtCore.QSize(40, 40))
         self.frameContainShowInfo = QtWidgets.QFrame(self.frame)
         self.frameContainShowInfo.setGeometry(QtCore.QRect(0, 0, 0, 0))
         self.showInfoScreenObj = ShowInfoScreen(self.frameContainShowInfo)
@@ -47,13 +51,16 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
             self.addFGPscreenObj.ListFingerNeedAdd(strMessage)
             self.addFGPscreenObj.GetFGP()
 
-        if(self.currentStep == 3):
+        elif(self.currentStep == 3):
             self.addFGPscreenObj.ShowStepStudentInformationAnim(self.frameContainAddFace)
             self.currentStep = 2
             #self.addFaceScreenObj.cameraObj.StopReadImage()
             self.addFaceScreenObj.StopTakePicture()
-            # self.addFGPscreenObj.ListFingerNeedAdd(strMessage)
-            # self.addFGPscreenObj.GetFGP()
+            self.addFGPscreenObj.ListFingerNeedAdd(strMessage)
+            self.addFGPscreenObj.GetFGP()
+        elif(self.currentStep == 2):
+            self.addFGPscreenObj.ListFingerNeedAdd(strMessage)
+            self.addFGPscreenObj.GetFGP()
         
     def GoToAddFaceScreen(self):
         if(self.currentStep == 2):
