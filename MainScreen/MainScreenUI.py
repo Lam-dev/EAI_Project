@@ -53,7 +53,7 @@ class Ui_Frame_containMainWindow(object):
     def retranslateUi(self, Frame_containMainWindow):
         _translate = QtCore.QCoreApplication.translate
         Frame_containMainWindow.setWindowTitle(_translate("Frame_containMainWindow", "Frame"))
-        self.labe_thietBiLayMauVanTayVV.setText(_translate("Frame_containMainWindow", "HỆ THỐNG LẤY MẪU VÂN TAY VÀ KHUÔN MẶT"))
+        self.labe_thietBiLayMauVanTayVV.setText(_translate("Frame_containMainWindow", "THIẾT BỊ LẤY MẪU VÂN TAY VÀ KHUÔN MẶT"))
 
 
 if __name__ == "__main__":
