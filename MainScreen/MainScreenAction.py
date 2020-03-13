@@ -9,6 +9,7 @@ from PyQt5          import QtWidgets
 import json
 
 class MainScreen(QObject, Ui_Frame_containMainWindow):
+    SignalCloseApp = pyqtSignal()
     def __init__(self, frameContainMainScreen):
         QObject.__init__(self)
         Ui_Frame_containMainWindow.__init__(self)
@@ -31,6 +32,7 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         self.frameContainAddFGP.setGeometry(QtCore.QRect(self.frame.width(), 0, 0, 0))
         self.addFGPscreenObj = AddFGPscreen(self.frameContainAddFGP)
 
+        self.label_logo.mouseDoubleClickEvent = lambda event: self.__OpenOutdoor()
 
         self.currentStep = 1
 
@@ -43,6 +45,9 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         self.addFGPscreenObj.SignalSendFGPGetToServer.connect(self.socketObj.SendFingerFeature)
 
         self.addFaceScreenObj.SignalPictureTaked.connect(self.socketObj.SendTakedImage)
+
+    def __OpenOutdoor(self):
+        self.SignalCloseApp.emit()
 
     def GoToAddFGPscreen(self, strMessage):
         if(self.currentStep == 1):

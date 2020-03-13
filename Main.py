@@ -16,6 +16,7 @@ class MainWindowContent(QObject):
         MainWindow.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.mainScreenObj = MainScreen(self.centralFrame)
+        self.mainScreenObj.SignalCloseApp.connect(MainWindow.close)
 
 if __name__ == "__main__":
     import sys

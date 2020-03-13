@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Frame_AddFGP</class>
+ <widget class="QFrame" name="Frame_AddFGP">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>493</width>
+    <height>351</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Raised</enum>
+  </property>
+  <widget class="QLabel" name="label_ThemVanTayThiSinh">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>6</y>
+     <width>335</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(29, 29, 29);
+font: 57 bold 16pt &quot;Ubuntu&quot;;</string>
+   </property>
+   <property name="text">
+    <string>THÊM VÂN TAY CHO THÍ SINH</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_forShowIconAddFingerPrint">
+   <property name="geometry">
+    <rect>
+     <x>102</x>
+     <y>50</y>
+     <width>287</width>
+     <height>209</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_forShowAnoument">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>264</y>
+     <width>375</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(216, 0, 0);
+font: 75 bold 14pt &quot;Ubuntu&quot;;</string>
+   </property>
+   <property name="text">
+    <string>ĐẶT TAY LÊN CẢM BIẾN</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_skipAddFGP">
+   <property name="geometry">
+    <rect>
+     <x>394</x>
+     <y>308</y>
+     <width>85</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Bỏ qua</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
