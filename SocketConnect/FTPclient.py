@@ -74,7 +74,7 @@ class FTPclient(QObject):
                         lstImage.append(f)
                 self.GetListFileFromServer(lstImage)
                 return lstImage
-            except NameError as e:
+            except:
                 print(e)
                 self.__CreateConnect()
         
@@ -83,7 +83,7 @@ class FTPclient(QObject):
         try:
             self.__CreateConnect()
             self.ftpObj.storbinary('STOR %s' % remotefile, fp, 1024)
-        except Exception:
+        except:
             print("remotefile not exist error caught" + remotefile)
             path,filename = os.path.split(remotefile)
             print("creating directory: " + remotefile)
@@ -97,7 +97,7 @@ class FTPclient(QObject):
         self.ftpObj.cwd(ftpFilePath)
         try:
             self.ftpObj.retrbinary("RETR " + fileName ,open(LOCAL_PATH_CONTAIN_DATA_UPDATE + "image.jpg", 'wb').write)
-        except Exception as e:
+        except:
             print(e.args)
             pass
 # x = FTPclient()

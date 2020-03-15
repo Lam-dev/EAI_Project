@@ -78,7 +78,10 @@ class Fingerprint(QObject):
         self.FlagFGPfree = True        
 
     def ClearFGPfeatureSaveOnSensor(self):
-        self.fingerprintObj.clearDatabase()
+        try:
+            self.fingerprintObj.clearDatabase()
+        except:
+            pass
 
     def GetFGPfeature(self):
         if(self.__FlagLockFGPsensor):

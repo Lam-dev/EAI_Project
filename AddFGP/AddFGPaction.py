@@ -75,16 +75,29 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
         self.__nameOfFingerAdding = ""
         
     def FGPget(self, FGPfeature):
-        self.__FGPgetPercent += 25
-        self.label_forShowFGPpercent.setText(str(self.__FGPgetPercent) + "%")
+        # self.__FGPgetPercent += 25
+        # self.label_forShowFGPpercent.setText(str(self.__FGPgetPercent) + "%")
+        # self.__lstFGPofAfinger.append(FGPfeature)
+        # if(self.__FGPgetPercent == 100):
+        #     self.__FGPgetPercent = 0
+        #     self.label_forShowFGPpercent.setText(str(self.__FGPgetPercent) + "%")
+        #     self.StopAll()
+        #     __lstFGPofAfingerStr = ";".join(self.__lstFGPofAfinger)
+        #     self.SignalSendFGPGetToServer.emit(__lstFGPofAfingerStr, self.__nameOfFingerAdding)
+        #     self.GetFGP()
+
+        
+        self.__FGPgetPercent += 1
+        self.label_forShowFGPpercent.setText(str(self.__FGPgetPercent))
         self.__lstFGPofAfinger.append(FGPfeature)
-        if(self.__FGPgetPercent == 100):
+        if(self.__FGPgetPercent == 3):
             self.__FGPgetPercent = 0
-            self.label_forShowFGPpercent.setText(str(self.__FGPgetPercent) + "%")
+            self.label_forShowFGPpercent.setText(str(self.__FGPgetPercent))
             self.StopAll()
             __lstFGPofAfingerStr = ";".join(self.__lstFGPofAfinger)
             self.SignalSendFGPGetToServer.emit(__lstFGPofAfingerStr, self.__nameOfFingerAdding)
             self.GetFGP()
+        
 
     def ShowFGPisTheSameWithPre(self):
         pass
@@ -169,54 +182,63 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
             self.__fingerNeedAddWhite = self.__pixmapUtTraiTrang
             self.__fingerNeedAddGreen = self.__pixmapUtTraiXanh
             self.__strNameFingerNeedAdd = fingerStr
+
         elif(fingerStr == "nhanTrai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN NHẪN TRÁI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_nhanTrai
             self.__fingerNeedAddWhite = self.__pixmapNhanTraiTrang
             self.__fingerNeedAddGreen = self.__pixmapNhanTraiXanh
             self.__strNameFingerNeedAdd = fingerStr
+
         elif(fingerStr == "giuaTrai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN GIỮA TRÁI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_giuaTrai
             self.__fingerNeedAddWhite = self.__pixmapGiuaTraiTrang
             self.__fingerNeedAddGreen = self.__pixmapGiuaTraiXanh
-            self.__strNameFingerNeedAdd = fingerStr            
+            self.__strNameFingerNeedAdd = fingerStr      
+
         elif(fingerStr == "troTrai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN TRỎ TRÁI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_troTrai
             self.__fingerNeedAddWhite = self.__pixmapTroTraiTrang
             self.__fingerNeedAddGreen = self.__pixmapTroTraiXanh
-            self.__strNameFingerNeedAdd = fingerStr            
+            self.__strNameFingerNeedAdd = fingerStr        
+
         elif(fingerStr == "caiTrai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN CÁI TRÁI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_caiTrai
             self.__fingerNeedAddWhite = self.__pixmapCaiTraiTrang
             self.__fingerNeedAddGreen = self.__pixmapCaiTraiXanh
-            self.__strNameFingerNeedAdd = fingerStr            
+            self.__strNameFingerNeedAdd = fingerStr   
+
         elif(fingerStr == "caiPhai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN CÁI PHẢI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_caiPhai
             self.__fingerNeedAddWhite = self.__pixmapCaiPhaiTrang
             self.__fingerNeedAddGreen = self.__pixmapCaiPhaiXanh
-            self.__strNameFingerNeedAdd = fingerStr           
+            self.__strNameFingerNeedAdd = fingerStr    
+
         elif(fingerStr == "troPhai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN TRỎ PHẢI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_troPhai
             self.__fingerNeedAddWhite = self.__pixmapTroPhaiTrang
             self.__fingerNeedAddGreen = self.__pixmapTroPhaiXanh
             self.__strNameFingerNeedAdd = fingerStr
+
         elif(fingerStr == "giuaPhai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN GIỮA PHẢI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_giuaPhai
             self.__fingerNeedAddWhite = self.__pixmapGiuaPhaiTrang
             self.__fingerNeedAddGreen = self.__pixmapGiuaPhaiXanh
             self.__strNameFingerNeedAdd = fingerStr
+
         elif(fingerStr == "nhanPhai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN NHẪN PHẢI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_nhanPhai
             self.__fingerNeedAddWhite = self.__pixmapNhanPhaiTrang
             self.__fingerNeedAddGreen = self.__pixmapNhanPhaiXanh
             self.__strNameFingerNeedAdd = fingerStr
+            
         elif(fingerStr == "utPhai"):
             self.label_forShowNotify.setText("ĐẶT NGÓN ÚT PHẢI LÊN CẢM BIẾN")
             self.imageObjNeedFlipFlop = self.label_utPhai

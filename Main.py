@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QDateTime, QObject, Qt, QTimer, pyqtSignal, pyqtSlot
 from MainScreen.MainScreenAction   import MainScreen
-
+import os
 
 class MainWindowContent(QObject):  
     def __init__(self, MainWindow):
@@ -17,6 +17,10 @@ class MainWindowContent(QObject):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.mainScreenObj = MainScreen(self.centralFrame)
         self.mainScreenObj.SignalCloseApp.connect(MainWindow.close)
+        self.mainScreenObj.SignalShutdown.connect(self.ShutDown)
+
+    def ShutDown(self):
+        os.system("shutdown now")
 
 if __name__ == "__main__":
     import sys
