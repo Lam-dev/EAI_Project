@@ -84,13 +84,16 @@ class FTPclient(QObject):
             self.__CreateConnect()
             self.ftpObj.storbinary('STOR %s' % remotefile, fp, 1024)
         except:
-            print("remotefile not exist error caught" + remotefile)
-            path,filename = os.path.split(remotefile)
-            print("creating directory: " + remotefile)
-            self.ftpObj.mkd(path)
-            self.ftpObj.storbinary('STOR %s' % remotefile, fp, 1024)
-            fp.close()
-            return
+            try:
+                print("remotefile not exist error caught" + remotefile)
+                path,filename = os.path.split(remotefile)
+                print("creating directory: " + remotefile)
+                self.ftpObj.mkd(path)
+                self.ftpObj.storbinary('STOR %s' % remotefile, fp, 1024)
+                fp.close()
+                return
+            except:
+                pass
         fp.close()
                 
     def GetFileFromFTPserver(self, fileName, ftpFilePath = FTP_SERVER_DOWLOAD_IMAGE_FILE_PATH):
