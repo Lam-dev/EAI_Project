@@ -97,7 +97,7 @@ class Ui_Frame_ContainAddFGPscreen(object):
         _translate = QtCore.QCoreApplication.translate
         Frame_ContainAddFGPscreen.setWindowTitle(_translate("Frame_ContainAddFGPscreen", "Frame"))
         self.label_forShowNotify.setText(_translate("Frame_ContainAddFGPscreen", "TextLabel"))
-        self.label_forShowFGPpercent.setText(_translate("Frame_ContainAddFGPscreen", "0%"))
+        self.label_forShowFGPpercent.setText(_translate("Frame_ContainAddFGPscreen", "0"))
 
 
 if __name__ == "__main__":

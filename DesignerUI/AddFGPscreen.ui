@@ -250,7 +250,7 @@ border-radius:7px</string>
 font: 75 58pt &quot;Ubuntu&quot;;</string>
     </property>
     <property name="text">
-     <string>0%</string>
+     <string>0</string>
     </property>
    </widget>
   </widget>

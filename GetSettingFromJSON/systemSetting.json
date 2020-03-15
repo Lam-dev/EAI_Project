@@ -1,1 +1,1 @@
-{"serverPassword": "2121996", "ftpPassword": "1", "ftpPort": "21", "FRthreshold": 4, "serverAccount": "lam96pt", "faceMark": 1, "serverIP": "192.168.16.139", "serverPort": "2019", "ftpAccount": "ELT", "ftpIP": "192.168.16.139", "autoShutdown": 2, "imageQuality": 1}
+{"serverPassword": "2121996", "ftpPassword": "1", "ftpPort": "21", "FRthreshold": 4, "serverAccount": "lam96pt", "faceMark": 1, "serverIP": "192.168.1.11", "serverPort": "2019", "ftpAccount": "ELT", "ftpIP": "192.168.1.11", "autoShutdown": 2, "imageQuality": 1}

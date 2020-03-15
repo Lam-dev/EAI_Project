@@ -15,6 +15,8 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
         self.frameContainCurrentStep.show()
         self.setupUi(frameContain)
         
+        
+
         self.__pixmapUtTraiTrang = QtGui.QPixmap("icon/finger/utTraiTrang.png")
         self.__pixmapNhanTraiTrang = QtGui.QPixmap("icon/finger/nhanTraiTrang.png")
         self.__pixmapGiuaTraiTrang = QtGui.QPixmap("icon/finger/giuaTraiTrang.png")
