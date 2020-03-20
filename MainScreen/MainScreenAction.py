@@ -70,7 +70,7 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
 
         self.addFaceScreenObj.SignalPictureTaked.connect(self.socketObj.SendTakedImage)
 
-        self.label_centerName.setText(self.__ConvertStringToUTF8String(NAME_CENTER))
+        self.label_centerName.setText(NAME_CENTER)
         self.label_deviceName.setText(self.__ConvertStringToUTF8String(NAME_DEVICE))
 
         self.__keyBoardOpened = False
