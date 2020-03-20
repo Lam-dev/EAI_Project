@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QDateTime, QObject, Qt, QTimer, pyqtSignal, pyqtSlot
 from MainScreen.MainScreenAction   import MainScreen
 import os
-
+import json
 class MainWindowContent(QObject):  
     def __init__(self, MainWindow):
         super(self.__class__, self).__init__()
@@ -16,12 +16,20 @@ class MainWindowContent(QObject):
         MainWindow.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.mainScreenObj = MainScreen(self.centralFrame)
-        self.mainScreenObj.SignalCloseApp.connect(MainWindow.close)
+        self.mainScreenObj.SignalCloseApp.connect(self.GoToDesktop)
         self.mainScreenObj.SignalShutdown.connect(self.ShutDown)
 
     def ShutDown(self):
         os.system("shutdown now")
 
+    def GoToDesktop(self):
+        desktop = {
+            'destop':1,
+        }
+        with open("desktop.json", 'w') as fp:
+            json.dump(desktop,fp)
+        MainWindow.close()
+        
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)

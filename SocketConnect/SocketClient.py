@@ -44,6 +44,7 @@ class SocketClient(QObject):
 
         self.__SignalConnected.connect(self.__ServerConnected)
 
+        self.callBackShowStatusConnectToSetting = object
 
         self.processReciptDataObj = ProcessReciptData()
 
@@ -63,6 +64,18 @@ class SocketClient(QObject):
         self.__SignalRecreateConnect.connect(self.__RecreateConnect)
         self.__FlagSendPingPong = True
         self.waitingForConnect = False
+
+    def ConnectNewFTP(self, dictInfor, callbackShowStatus):
+        callbackShowStatus(self.ftpObj.ConnectNewFTPserver(dictInfor))
+
+    def SocketConnectNewServer(self, dictInfor, callback):
+        global SERVER_IP, SERVER_PORT
+        SERVER_IP = dictInfor["serverIP"]
+        SERVER_PORT = dictInfor["serverPort"]
+        self.FlagServerISconnect = False
+        self.callBackShowStatusConnectToSetting = callback
+        self.__SignalRecreateConnect.emit()
+
 
     def SendTakedImage(self, featureStr = ""):
         imageNameToServer = "face"+datetime.now().strftime("%Y%m%d%H%M%S")
@@ -93,8 +106,12 @@ class SocketClient(QObject):
             self.FlagServerISconnect = True
             self.TimerWaitForServerConfirm.stop()
             self.ThreadWaitForReciptData()
-            self.timerPingPong.start(30000)
-        except:
+            #self.timerPingPong.start(30000)
+            try:
+                self.callBackShowStatusConnectToSetting(True)
+            except:
+                pass
+        except NameError:
             pass
     
     def SendFingerFeature(self, featureStr, fingerName):
@@ -156,6 +173,10 @@ class SocketClient(QObject):
                 self.__SignalConnected.emit()
 
         except:
+            try:
+                self.callBackShowStatusConnectToSetting(False)
+            except:
+                pass
             self.SignalServerNotConnect.emit()
             print("khong the ket noi") #test
             self.FlagServerISconnect = False
@@ -171,7 +192,7 @@ class SocketClient(QObject):
         try:
             self.clientObj.send(data)
             self.__FlagSendPingPong = False
-        except NameError:
+        except:
             self.FlagServerISconnect
             self.__SignalRecreateConnect.emit()
 

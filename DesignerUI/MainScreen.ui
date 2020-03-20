@@ -40,21 +40,21 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLabel" name="labe_thietBiLayMauVanTayVV">
+   <widget class="QLabel" name="label_centerName">
     <property name="geometry">
      <rect>
-      <x>122</x>
-      <y>4</y>
-      <width>541</width>
-      <height>35</height>
+      <x>78</x>
+      <y>2</y>
+      <width>577</width>
+      <height>23</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(0, 0, 255);
-font: 75 bold 16pt &quot;Ubuntu&quot;;</string>
+font: 75 bold 13pt &quot;Ubuntu&quot;;</string>
     </property>
     <property name="text">
-     <string>HỆ THỐNG LẤY MẪU VÂN TAY VÀ KHUÔN MẶT</string>
+     <string>CÔNG TY CỔ PHẦN CÔNG NGHỆ KỸ THUẬT ECOTEK</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -63,9 +63,9 @@ font: 75 bold 16pt &quot;Ubuntu&quot;;</string>
    <widget class="QLabel" name="label_logo">
     <property name="geometry">
      <rect>
-      <x>658</x>
+      <x>660</x>
       <y>6</y>
-      <width>141</width>
+      <width>139</width>
       <height>37</height>
      </rect>
     </property>
@@ -76,7 +76,7 @@ font: 75 bold 16pt &quot;Ubuntu&quot;;</string>
      <pixmap>../../Desktop/EcotekProject/TheoryFaceRecognition/icon/iconEcotek.png</pixmap>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_shutdown">
+   <widget class="QPushButton" name="pushButton_settingButton">
     <property name="geometry">
      <rect>
       <x>6</x>
@@ -102,6 +102,26 @@ border-radius:5px;</string>
       <width>40</width>
       <height>40</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_deviceName">
+    <property name="geometry">
+     <rect>
+      <x>76</x>
+      <y>28</y>
+      <width>583</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(160, 0, 0);
+font: 75 bold 14pt &quot;Ubuntu&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Thiết bị lấy mẫu vân tay, khuôn mặt</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

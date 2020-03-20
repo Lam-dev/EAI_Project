@@ -6,9 +6,9 @@ from SettingScreen.SettingScreenUI    import Ui_frame_settingScreen
 from SettingScreen.ScreenSettingContent   import ScreenSettingContent
 from SettingScreen.SystemSettingContent   import SystemSettingContent
 from SettingScreen.SoundSettingContent    import SoundSettingContent
-from SettingScreen.DatabaseManagerScreen  import DatabaseManagerScreen
-from SettingScreen.HideSettingScreenAction import HideSettingScreen
 from KeyBoard               import KeyBoard
+from        datetime        import datetime
+import      pytz
 
 class SettingScreen(Ui_frame_settingScreen, QObject):
     RequestOpenDatabaseScreen = pyqtSignal()
@@ -16,12 +16,14 @@ class SettingScreen(Ui_frame_settingScreen, QObject):
     SignalModifyFRthreshold = pyqtSignal(float)
     SignalModifyFaceMark = pyqtSignal(bool)
     SignalModifyImageQuality = pyqtSignal(int)
-    SignalConnectNewServer = pyqtSignal(dict)
-    SignalConnectNewFTPserver = pyqtSignal(dict)
+    SignalConnectNewServer = pyqtSignal(dict, object)
+    SignalConnectNewFTPserver = pyqtSignal(dict, object)
     SignalOpenHideSettingScreen = pyqtSignal()
     SignalCleanFGPsensor = pyqtSignal()
     SignalCheckVersion = pyqtSignal()
-
+    SignalShutdown = pyqtSignal()
+    SignalDeleteAllData = pyqtSignal()
+    
     def __init__(self, Frame):
         
         Ui_frame_settingScreen.__init__(self)
@@ -37,6 +39,12 @@ class SettingScreen(Ui_frame_settingScreen, QObject):
         self.frameContainSettingScreen  = Frame
         self.keyboardIsShow = False
         
+        self.pushButton_shutdown.clicked.connect(self.SignalShutdown.emit)
+        
+        self.timerGetAndShowTime = QTimer(self)
+        self.timerGetAndShowTime.timeout.connect(self.__GetAndShowTime)
+        self.timerGetAndShowTime.start(1000)
+
         self.pixmapConnected = QtGui.QPixmap("icon/iconConnected.png")
         self.pixmapWaitForConnect = QtGui.QPixmap("icon/iconWaitForConnect.png")
 
@@ -48,8 +56,7 @@ class SettingScreen(Ui_frame_settingScreen, QObject):
         self.lb_iconSystemSetting.enterEvent = lambda event: self.MouseEnterItems(self.lb_textSystemSetting)
         # self.lb_textSecuritySetting.enterEvent = lambda event: self.MouseEnterItems(self.lb_textSecuritySetting)
         # self.lb_iconSecuritySetting.enterEvent = lambda event: self.MouseEnterItems(self.lb_textSecuritySetting)
-        self.lb_iconDatabaseSetting.enterEvent = lambda event: self.MouseEnterItems(self.lb_textDatabaseSetting)
-        self.lb_textDatabaseSetting.enterEvent = lambda event: self.MouseEnterItems(self.lb_textDatabaseSetting)
+        #self.lb_iconDatabaseSetting.enterEvent = lambda event: self.MouseEnterItems(self.lb_textDatabaseSetting)
         
         self.lb_textScreenSetting.leaveEvent = lambda event: self.MouseLeaveItems(self.lb_textScreenSetting)
         self.lb_iconScreenSetting.leaveEvent = lambda event: self.MouseLeaveItems(self.lb_textScreenSetting)
@@ -59,9 +66,7 @@ class SettingScreen(Ui_frame_settingScreen, QObject):
         self.lb_iconSystemSetting.leaveEvent = lambda event: self.MouseLeaveItems(self.lb_textSystemSetting)
         # self.lb_textSecuritySetting.leaveEvent = lambda event: self.MouseLeaveItems(self.lb_textSecuritySetting)
         # self.lb_iconSecuritySetting.leaveEvent = lambda event: self.MouseLeaveItems(self.lb_textSecuritySetting)
-        self.lb_iconDatabaseSetting.leaveEvent = lambda event: self.MouseLeaveItems(self.lb_textDatabaseSetting)
-        self.lb_textDatabaseSetting.leaveEvent = lambda event: self.MouseLeaveItems(self.lb_textDatabaseSetting)
-        
+
         self.lb_textScreenSetting.mousePressEvent = lambda event: self.ChooseScreenSetting(1)
         self.lb_iconScreenSetting.mousePressEvent = lambda event: self.ChooseScreenSetting(1)
         self.lb_textSoundSetting.mousePressEvent = lambda event: self.ChooseScreenSetting(2)
@@ -70,15 +75,13 @@ class SettingScreen(Ui_frame_settingScreen, QObject):
         self.lb_iconSystemSetting.mousePressEvent = lambda event: self.ChooseScreenSetting(3)
         # self.lb_textSecuritySetting.mousePressEvent = lambda event: self.ChooseScreenSetting(4)
         # self.lb_iconSecuritySetting.mousePressEvent = lambda event: self.ChooseScreenSetting(4)
-        self.lb_iconDatabaseSetting.mousePressEvent = lambda event: self.ChooseScreenSetting(5)
-        self.lb_textDatabaseSetting.mousePressEvent = lambda event: self.ChooseScreenSetting(5)
-        self.lb_iconDatabaseSetting.setPixmap(QtGui.QPixmap("icon/iconDatabase.png"))
+
         self.lb_iconScreenSetting.setPixmap(QtGui.QPixmap("icon/iconPicture.png"))
         # self.lb_iconSecuritySetting.setPixmap(QtGui.QPixmap("icon/iconSecurity.png"))
         self.lb_iconSoundSetting.setPixmap(QtGui.QPixmap("icon/iconSound.png"))
         self.lb_iconSystemSetting.setPixmap(QtGui.QPixmap("icon/iconSystem.png"))
 
-        self.pushButton_goToHideSetting.clicked.connect(self.SignalOpenHideSettingScreen)
+        #self.pushButton_goToHideSetting.clicked.connect(self.SignalOpenHideSettingScreen)
         
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icon/iconShutdown.png"), QtGui.QIcon.Disabled, QtGui.QIcon.On)
@@ -87,7 +90,12 @@ class SettingScreen(Ui_frame_settingScreen, QObject):
         self.ChooseScreenSetting(1)
         self.settingNumber = 1
 
-        
+    def __GetAndShowTime(self):
+        tz_HCM = pytz.timezone('Asia/Ho_Chi_Minh') 
+        datetime_HCM = datetime.now(tz_HCM)
+        time_string = datetime_HCM.strftime("%d/%m/%Y \n %H:%M:%S")
+        self.label_forShowDateTime.setText(time_string)
+
     def ShowConnectFTPserverStatusToSettingScreen(self, statusStr, connectAvailalbe):
         if(self.settingNumber == 3):
             self.content.label_showFTPconnectStatus.setText(statusStr)
@@ -155,6 +163,7 @@ class SettingScreen(Ui_frame_settingScreen, QObject):
             self.content.SignalConnectNewServer.connect(self.SignalConnectNewServer.emit)
             self.content.SignalConnectNewFTPserver.connect(self.SignalConnectNewFTPserver.emit)
             self.content.SignalCleanFGPsensor.connect(self.SignalCleanFGPsensor.emit)
+            self.content.SignalDeleteAllData.connect(self.SignalDeleteAllData.emit)
             
             self.content.lineEdit_forInputIP.mousePressEvent = lambda event:self.__OpenKeyboard(self.content.lineEdit_forInputIP)
             self.content.lineEdit_forInputPort.mousePressEvent = lambda event:self.__OpenKeyboard(self.content.lineEdit_forInputPort)

@@ -23,24 +23,33 @@ class Ui_Frame_containMainWindow(object):
         self.frame_containLogoAndDeviceName.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_containLogoAndDeviceName.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_containLogoAndDeviceName.setObjectName("frame_containLogoAndDeviceName")
-        self.labe_thietBiLayMauVanTayVV = QtWidgets.QLabel(self.frame_containLogoAndDeviceName)
-        self.labe_thietBiLayMauVanTayVV.setGeometry(QtCore.QRect(122, 4, 541, 35))
-        self.labe_thietBiLayMauVanTayVV.setStyleSheet("color: rgb(0, 0, 255);\n"
-"font: 75 bold 16pt \"Ubuntu\";")
-        self.labe_thietBiLayMauVanTayVV.setAlignment(QtCore.Qt.AlignCenter)
-        self.labe_thietBiLayMauVanTayVV.setObjectName("labe_thietBiLayMauVanTayVV")
+        self.label_centerName = QtWidgets.QLabel(self.frame_containLogoAndDeviceName)
+        self.label_centerName.setGeometry(QtCore.QRect(78, 2, 577, 23))
+        self.label_centerName.setStyleSheet("color: rgb(0, 0, 255);\n"
+"font: 75 bold 13pt \"Ubuntu\";")
+        self.label_centerName.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_centerName.setObjectName("label_centerName")
         self.label_logo = QtWidgets.QLabel(self.frame_containLogoAndDeviceName)
-        self.label_logo.setGeometry(QtCore.QRect(658, 6, 141, 37))
+        self.label_logo.setGeometry(QtCore.QRect(660, 6, 139, 37))
         self.label_logo.setText("")
-
+        self.label_logo.setPixmap(QtGui.QPixmap("../../Desktop/EcotekProject/TheoryFaceRecognition/icon/iconEcotek.png"))
         self.label_logo.setObjectName("label_logo")
-        self.pushButton_shutdown = QtWidgets.QPushButton(self.frame_containLogoAndDeviceName)
-        self.pushButton_shutdown.setGeometry(QtCore.QRect(6, 0, 57, 49))
-        self.pushButton_shutdown.setStyleSheet("border-style:solid;\n"
+        self.pushButton_settingButton = QtWidgets.QPushButton(self.frame_containLogoAndDeviceName)
+        self.pushButton_settingButton.setGeometry(QtCore.QRect(6, 0, 57, 49))
+        self.pushButton_settingButton.setStyleSheet("border-style:solid;\n"
 "border-radius:5px;")
-        self.pushButton_shutdown.setText("")
-
-        self.pushButton_shutdown.setObjectName("pushButton_shutdown")
+        self.pushButton_settingButton.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../icon/shutdown.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.pushButton_settingButton.setIcon(icon)
+        self.pushButton_settingButton.setIconSize(QtCore.QSize(40, 40))
+        self.pushButton_settingButton.setObjectName("pushButton_settingButton")
+        self.label_deviceName = QtWidgets.QLabel(self.frame_containLogoAndDeviceName)
+        self.label_deviceName.setGeometry(QtCore.QRect(76, 28, 583, 21))
+        self.label_deviceName.setStyleSheet("color: rgb(160, 0, 0);\n"
+"font: 75 bold 14pt \"Ubuntu\";")
+        self.label_deviceName.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_deviceName.setObjectName("label_deviceName")
         self.frame = QtWidgets.QFrame(Frame_containMainWindow)
         self.frame.setGeometry(QtCore.QRect(0, 50, 800, 429))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -53,7 +62,8 @@ class Ui_Frame_containMainWindow(object):
     def retranslateUi(self, Frame_containMainWindow):
         _translate = QtCore.QCoreApplication.translate
         Frame_containMainWindow.setWindowTitle(_translate("Frame_containMainWindow", "Frame"))
-        self.labe_thietBiLayMauVanTayVV.setText(_translate("Frame_containMainWindow", "THIẾT BỊ LẤY MẪU VÂN TAY VÀ KHUÔN MẶT"))
+        self.label_centerName.setText(_translate("Frame_containMainWindow", "CÔNG TY CỔ PHẦN CÔNG NGHỆ KỸ THUẬT ECOTEK"))
+        self.label_deviceName.setText(_translate("Frame_containMainWindow", "Thiết bị lấy mẫu vân tay, khuôn mặt"))
 
 
 if __name__ == "__main__":

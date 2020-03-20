@@ -2,8 +2,7 @@ from PyQt5                  import QtCore, QtGui, QtWidgets
 from PyQt5                  import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui            import QIcon, QPixmap
 from PyQt5.QtCore           import pyqtSlot, pyqtSignal,QTimer, QDateTime, Qt, QObject, QPointF, QPropertyAnimation, pyqtProperty
-from SettingScreen.DialogInputPasswordUI    import Ui_Frame_forInputPassword
-from DatabaseAccess.DatabaseAccess    import ThongTinTaiKhoanQuanLy
+
 
 class DialogInputPassword(QObject, Ui_Frame_forInputPassword):
     SignalPasswordCorrect = pyqtSignal()

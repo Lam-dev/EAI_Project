@@ -3,15 +3,18 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal,QTimer, QDateTime, Qt, QObject, QP
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 from GetSettingFromJSON   import GetSetting, SaveSetting
+import json
 
 class SystemSettingContent(Ui_widget_containSettingContent, QObject):
     GetTextFromKeyBoard = pyqtSignal(object)
     SignalModifyFRpoint = pyqtSignal(float)
     SignalModifyFaceMark = pyqtSignal(bool)
     SignalModifyImageQuality = pyqtSignal(float)
-    SignalConnectNewServer = pyqtSignal(dict)
-    SignalConnectNewFTPserver = pyqtSignal(dict)
+    SignalConnectNewServer = pyqtSignal(dict, object)
+    SignalConnectNewFTPserver = pyqtSignal(dict, object)
     SignalCleanFGPsensor = pyqtSignal()
+    SignalDeleteAllData = pyqtSignal()
+    
 
     def __init__(self):
         QObject.__init__(self)
@@ -45,29 +48,53 @@ class SystemSettingContent(Ui_widget_containSettingContent, QObject):
         self.pushButton_connectNewServer.clicked.connect(self.__ConnectNewServer)
         self.pushButton_connectNewFTP.clicked.connect(self.__ConnectNewFTPserver)
         self.pushButton_cleanFGPsensor.clicked.connect(self.SignalCleanFGPsensor.emit)
+        self.pushButton_deleteAllData.clicked.connect(self.SignalDeleteAllData.emit)
         self.GetAndShowSetting()
+        self.__GetAndShowCurrentVersion()
+
+    def __GetAndShowCurrentVersion(self):
+        try:
+            with open("version.json", "r") as fp:
+                versionDict = json.load(fp)
+                self.label_forShowFirmwareVersion.setText(versionDict["crVer"])
+        except:
+            self.label_forShowFirmwareVersion.setText("v0.0.0")
         
     def __ConnectNewServer(self):
         
         serverInfoDict  ={
             "serverIP"     : self.lineEdit_forInputIP.text(),
-            "serverPort"   : self.lineEdit_forInputPort.text(),
+            "serverPort"   : int(self.lineEdit_forInputPort.text()),
             "serverAccount" : self.lineEdit_forInputAccount.text(),
             "serverPassword" : self.lineEdit_forInputPassword.text()
         }
-        self.SignalConnectNewServer.emit(serverInfoDict)
-
+        self.SignalConnectNewServer.emit(serverInfoDict, self.NotConnectServer)
+    
     def __ConnectNewFTPserver(self):
         
         FTPserverDict = {
             "ftpIP" : self.lineEdit_forInputFTPIP.text(),
-            "ftpPort" : self.lineEdit_forInputFTPport.text(),
+            "ftpPort" : int(self.lineEdit_forInputFTPport.text()),
             "ftpAccount" : self.lineEdit_forInputFTPaccount.text(),
             "ftpPassword" : self.lineEdit_forInputFPTpassword.text()
         }
-        self.SignalConnectNewFTPserver.emit(FTPserverDict)
+        self.SignalConnectNewFTPserver.emit(FTPserverDict, self.ConnectFTPstatus)
+
+    def ConnectFTPstatus(self, connected):
+        if(connected == True):
+            self.label_showFTPconnectStatus.setText("Đã kết nối")
+        else:
+            self.label_showFTPconnectStatus.setText("Không thể kết nối")
+
+
+    def NotConnectServer(self, connected):
+        if(connected == True):
+            self.label_showSocketConnectStatus.setText("Đã kết nối")
+        else:
+            self.label_showSocketConnectStatus.setText("Không thể kết nối")
 
     def GetAndShowSetting(self):
+        
         settingDict = GetSetting.GetSystemSetting()
         if(type(settingDict) is  bool):
             return

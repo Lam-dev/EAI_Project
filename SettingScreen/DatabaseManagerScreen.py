@@ -3,7 +3,6 @@ from PyQt5                  import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui            import QIcon, QPixmap
 from PyQt5.QtCore           import pyqtSlot, pyqtSignal,QTimer, QDateTime, Qt, QObject, QPointF, QPropertyAnimation, pyqtProperty
 from SettingScreen.DatabaseManagerScreenUI    import Ui_Frame_containDatabaseScreen
-from DatabaseAccess.DatabaseAccess            import *  
 from SettingScreen.StepShowStudentInformation import StepShowStudentInformation
 from SettingScreen.AddFace                    import AddFaceScreen
 from SettingScreen.AddFGP                     import AddFGP
@@ -13,8 +12,8 @@ from SettingScreen.AddDataResult              import AddDataResults
 class DatabaseManagerScreen(Ui_Frame_containDatabaseScreen, QObject):
     SignalCloseDatabaseScreen = pyqtSignal()
     SignalAddFaceEncodeAndFGP = pyqtSignal(dict, dict)
-    SignalDeleteFaceAdded = pyqtSignal(int)
-    SignalDeleteFGPadded = pyqtSignal(int)
+    SignalDeleteFaceAdded = pyqtSignal(str)
+    SignalDeleteFGPadded = pyqtSignal(str)
 
     def __init__(self, frameContain):
         Ui_Frame_containDatabaseScreen.__init__(self)
@@ -30,6 +29,16 @@ class DatabaseManagerScreen(Ui_Frame_containDatabaseScreen, QObject):
         #self.pushButton_preStep.hide()
 
         self.pushButton_reloadDatabase.clicked.connect(self.__ReloadScreen)
+
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon/closeIcon37.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_closeDatabaseScreen.setIcon(icon)
+        self.pushButton_closeDatabaseScreen.setIconSize(QtCore.QSize(39, 39))
+
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("icon/reloadIcon37.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_reloadDatabase.setIcon(icon1)
+        self.pushButton_reloadDatabase.setIconSize(QtCore.QSize(32, 32))
 
         self.comboBox_showListCourser.currentIndexChanged.connect(self.ChooserCourse)
         self.lstStudent = []
@@ -181,7 +190,7 @@ class DatabaseManagerScreen(Ui_Frame_containDatabaseScreen, QObject):
 
         row = self.listWidget_showListStudent.currentRow()
         self.studentInfoObj.ShowStudentInformation(self.lstStudent[row])
-        self.pushButton_nextStep.show()
+        #self.pushButton_nextStep.show()
         self.addFaceObj.addForStudent = self.lstStudent[row]
         self.addFGPobj.studentForAdd = self.lstStudent[row]
         self.choseStudent = self.lstStudent[row]

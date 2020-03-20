@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>659</width>
-    <height>429</height>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,8 +41,8 @@ background-color: rgb(255, 255, 235);</string>
    <widget class="QWidget" name="formLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>12</x>
-      <y>22</y>
+      <x>10</x>
+      <y>98</y>
       <width>181</width>
       <height>209</height>
      </rect>
@@ -118,22 +118,15 @@ background-color: rgb(255, 255, 235);</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLabel" name="lb_textDatabaseSetting">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cơ sở dữ liệu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QPushButton" name="pushButton_shutdown">
     <property name="geometry">
      <rect>
       <x>12</x>
-      <y>388</y>
-      <width>37</width>
-      <height>31</height>
+      <y>368</y>
+      <width>63</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -146,22 +139,32 @@ background-color: rgb(255, 255, 235);</string>
     </property>
     <property name="iconSize">
      <size>
-      <width>30</width>
-      <height>30</height>
+      <width>50</width>
+      <height>50</height>
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_goToHideSetting">
+   <widget class="QLabel" name="label_forShowDateTime">
     <property name="geometry">
      <rect>
-      <x>34</x>
-      <y>266</y>
-      <width>127</width>
-      <height>89</height>
+      <x>10</x>
+      <y>8</y>
+      <width>175</width>
+      <height>71</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 120, 0);
+font: 57 bold 18pt &quot;Ubuntu&quot;;
+background-color: rgba(0, 170, 255, 80);
+border-width:1px;
+</string>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

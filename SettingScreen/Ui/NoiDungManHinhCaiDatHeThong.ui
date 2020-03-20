@@ -700,7 +700,7 @@ color: rgb(0, 170, 255);</string>
      <string notr="true">font: 75 bold 12pt &quot;Ubuntu&quot;;</string>
     </property>
     <property name="text">
-     <string>Thông tin bộ nhớ</string>
+     <string>Xóa toàn bộ dữ liệu</string>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
@@ -719,24 +719,32 @@ color: rgb(0, 170, 255);</string>
      <bool>true</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(0, 85, 255);
+     <string notr="true">color: rgb(255, 85, 0);
 font: 25 10pt &quot;Ubuntu&quot;;</string>
     </property>
     <property name="text">
-     <string>(Bộ nhớ sử dụng trên thiết bị)</string>
+     <string>(Xóa toàn bộ dữ liệu trên cảm biến)</string>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QTableView" name="tableView_forShowMemoryInformation">
+   <widget class="QPushButton" name="pushButton_deleteAllData">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>64</y>
-      <width>401</width>
-      <height>81</height>
+      <x>22</x>
+      <y>66</y>
+      <width>65</width>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:3px;
+color: rgb(0, 170, 255);</string>
+    </property>
+    <property name="text">
+     <string>Xóa</string>
     </property>
    </widget>
   </widget>
@@ -877,21 +885,21 @@ border-color: rgba(0,140,255,255);
      <item>
       <widget class="QLabel" name="label_forShowFirmwareVersion">
        <property name="text">
-        <string>1.0.0</string>
+        <string>v0.0.0</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_forShowUpdateTime">
        <property name="text">
-        <string>30/10/2019 - 18:24:00</string>
+        <string/>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_forShowCopyright">
        <property name="text">
-        <string>Công ty cổ phần công nghệ và kỹ thuật Ecotek</string>
+        <string>Công ty cổ phần Công nghệ và Kỹ thuật Ecotek</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -1395,7 +1403,6 @@ color: rgb(0, 170, 255);</string>
   <tabstop>lineEdit_forInputPort</tabstop>
   <tabstop>lineEdit_forInputFTPaccount</tabstop>
   <tabstop>lineEdit_forInputFPTpassword</tabstop>
-  <tabstop>tableView_forShowMemoryInformation</tabstop>
   <tabstop>comboBox_chooseTime</tabstop>
  </tabstops>
  <resources/>

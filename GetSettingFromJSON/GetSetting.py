@@ -19,9 +19,12 @@ def GetSetting(arg):
         return setting["SocketServerPort"]
 
 def LoadSettingFromFile():
-    with open('GetSettingFromJSON/systemSetting.json') as json_file:
-        setting = json.load(json_file)
-    return setting
+    try:
+        with open('../Setting/systemSetting.json') as json_file:
+            setting = json.load(json_file)
+        return setting
+    except:
+        return 0
 
 def UpdateServerImageDir(dir):
     with open('GetSettingFromJSON/setting.json') as json_file:
@@ -32,10 +35,33 @@ def UpdateServerImageDir(dir):
 
 def GetSystemSetting():
     try:
-        with open('GetSettingFromJSON/systemSetting.json') as json_file:
+        with open('../Setting/systemSetting.json') as json_file:
             return json.load(json_file)
     except:
         return 0
+
+def GetPersionalSetting():
+    try:
+        with open('../Setting/persionalSetting.json', encoding= "utf-8") as json_file:
+            return json.load(json_file)
+    except:
+        return 0
+
+def GetUARTsetting():
+    try:
+        with open('../Setting/UARTsetting.json', encoding= "utf-8") as json_file:
+            return json.load(json_file)
+    except:
+        return 0
+
+def GetEcotekServerSetting():
+    try:
+        with open('../Setting/setting.json') as json_file:
+            return json.load(json_file)
+    except:
+        return 0
+
+
             
 # UpdateServerImageDir("local/abde")
 # print(GetSetting("--ServerImageDir"))
