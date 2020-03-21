@@ -98,6 +98,7 @@ class AddFGPscreen(QObject, Ui_Frame_ContainAddFGPscreen):
             self.StopAll()
             __lstFGPofAfingerStr = ";".join(self.__lstFGPofAfinger)
             self.SignalSendFGPGetToServer.emit(__lstFGPofAfingerStr, self.__nameOfFingerAdding)
+            self.__lstFGPofAfinger = []
             self.GetFGP()
         
 

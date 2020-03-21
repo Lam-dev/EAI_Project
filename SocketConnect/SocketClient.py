@@ -11,10 +11,13 @@ import json
 import  os
 from    SocketConnect.FTPclient    import FTPclient
 
-
-SETTING_DICT                                        = GetSetting.LoadSettingFromFile()
-SERVER_IP                                           = SETTING_DICT["serverIP"]
-SERVER_PORT                                         = int(SETTING_DICT["serverPort"])
+try:
+    SETTING_DICT                                        = GetSetting.LoadSettingFromFile()
+    SERVER_IP                                           = SETTING_DICT["serverIP"]
+    SERVER_PORT                                         = int(SETTING_DICT["serverPort"])
+except:
+    SERVER_IP = "0.0.0.0"
+    SERVER_PORT = 0
 
 MAC                                                 = "1234"
 

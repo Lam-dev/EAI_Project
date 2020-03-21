@@ -25,12 +25,17 @@ from   GetSettingFromJSON       import GetSetting
 # files = ftp.nlst()
 # for f in files:
 #     print(f)
-
-SETTING_DICT = GetSetting.LoadSettingFromFile()
-FTP_IP       =  SETTING_DICT["ftpIP"]
-FTP_PORT     =  SETTING_DICT["ftpPort"]
-FTP_ACCOUNT  =  SETTING_DICT["ftpAccount"]
-FTP_PASSWORD =  SETTING_DICT["ftpPassword"]
+try:
+    SETTING_DICT = GetSetting.LoadSettingFromFile()
+    FTP_IP       =  SETTING_DICT["ftpIP"]
+    FTP_PORT     =  SETTING_DICT["ftpPort"]
+    FTP_ACCOUNT  =  SETTING_DICT["ftpAccount"]
+    FTP_PASSWORD =  SETTING_DICT["ftpPassword"]
+except:
+    FTP_IP       =  "0.0.0.0"
+    FTP_PORT     =  1
+    FTP_ACCOUNT  =  ""
+    FTP_PASSWORD =  ""
 
 LOCAL_PATH_CONTAIN_DATA_UPDATE = "DataUpdate/"
 LOCAL_PATH_CONTAIN_ID_IMAGE = "IDimage/"

@@ -61,25 +61,28 @@ class SystemSettingContent(Ui_widget_containSettingContent, QObject):
             self.label_forShowFirmwareVersion.setText("v0.0.0")
         
     def __ConnectNewServer(self):
-        
-        serverInfoDict  ={
-            "serverIP"     : self.lineEdit_forInputIP.text(),
-            "serverPort"   : int(self.lineEdit_forInputPort.text()),
-            "serverAccount" : self.lineEdit_forInputAccount.text(),
-            "serverPassword" : self.lineEdit_forInputPassword.text()
-        }
-        self.SignalConnectNewServer.emit(serverInfoDict, self.NotConnectServer)
+        try:
+            serverInfoDict  ={
+                "serverIP"     : self.lineEdit_forInputIP.text(),
+                "serverPort"   : int(self.lineEdit_forInputPort.text()),
+                "serverAccount" : self.lineEdit_forInputAccount.text(),
+                "serverPassword" : self.lineEdit_forInputPassword.text()
+            }
+            self.SignalConnectNewServer.emit(serverInfoDict, self.NotConnectServer)
+        except:
+            pass
     
     def __ConnectNewFTPserver(self):
-        
-        FTPserverDict = {
-            "ftpIP" : self.lineEdit_forInputFTPIP.text(),
-            "ftpPort" : int(self.lineEdit_forInputFTPport.text()),
-            "ftpAccount" : self.lineEdit_forInputFTPaccount.text(),
-            "ftpPassword" : self.lineEdit_forInputFPTpassword.text()
-        }
-        self.SignalConnectNewFTPserver.emit(FTPserverDict, self.ConnectFTPstatus)
-
+        try:
+            FTPserverDict = {
+                "ftpIP" : self.lineEdit_forInputFTPIP.text(),
+                "ftpPort" : int(self.lineEdit_forInputFTPport.text()),
+                "ftpAccount" : self.lineEdit_forInputFTPaccount.text(),
+                "ftpPassword" : self.lineEdit_forInputFPTpassword.text()
+            }
+            self.SignalConnectNewFTPserver.emit(FTPserverDict, self.ConnectFTPstatus)
+        except:
+            pass
     def ConnectFTPstatus(self, connected):
         if(connected == True):
             self.label_showFTPconnectStatus.setText("Đã kết nối")
