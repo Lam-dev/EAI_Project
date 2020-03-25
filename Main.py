@@ -16,11 +16,15 @@ class MainWindowContent(QObject):
         MainWindow.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.mainScreenObj = MainScreen(self.centralFrame)
+        self.mainScreenObj.SignalCloseELT.connect(MainWindow.close)
         self.mainScreenObj.SignalCloseApp.connect(self.GoToDesktop)
         self.mainScreenObj.SignalShutdown.connect(self.ShutDown)
 
     def ShutDown(self):
         os.system("shutdown now")
+
+    def CloseELT(self):
+        pass
 
     def GoToDesktop(self):
         desktop = {
