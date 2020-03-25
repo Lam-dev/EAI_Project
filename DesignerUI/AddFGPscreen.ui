@@ -41,8 +41,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_utTrai">
     <property name="geometry">
      <rect>
-      <x>68</x>
-      <y>16</y>
+      <x>48</x>
+      <y>80</y>
       <width>44</width>
       <height>270</height>
      </rect>
@@ -57,8 +57,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_nhanTrai">
     <property name="geometry">
      <rect>
-      <x>112</x>
-      <y>14</y>
+      <x>92</x>
+      <y>78</y>
       <width>52</width>
       <height>270</height>
      </rect>
@@ -73,8 +73,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_giuaTrai">
     <property name="geometry">
      <rect>
-      <x>164</x>
-      <y>14</y>
+      <x>144</x>
+      <y>78</y>
       <width>48</width>
       <height>270</height>
      </rect>
@@ -89,8 +89,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_troTrai">
     <property name="geometry">
      <rect>
-      <x>208</x>
-      <y>14</y>
+      <x>188</x>
+      <y>78</y>
       <width>57</width>
       <height>270</height>
      </rect>
@@ -105,8 +105,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_caiTrai">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>14</y>
+      <x>240</x>
+      <y>78</y>
       <width>49</width>
       <height>270</height>
      </rect>
@@ -121,8 +121,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_troPhai">
     <property name="geometry">
      <rect>
-      <x>376</x>
-      <y>14</y>
+      <x>356</x>
+      <y>78</y>
       <width>52</width>
       <height>270</height>
      </rect>
@@ -137,8 +137,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_giuaPhai">
     <property name="geometry">
      <rect>
-      <x>428</x>
-      <y>14</y>
+      <x>408</x>
+      <y>78</y>
       <width>48</width>
       <height>270</height>
      </rect>
@@ -156,8 +156,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_caiPhai">
     <property name="geometry">
      <rect>
-      <x>324</x>
-      <y>14</y>
+      <x>304</x>
+      <y>78</y>
       <width>53</width>
       <height>270</height>
      </rect>
@@ -172,8 +172,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_utPhai">
     <property name="geometry">
      <rect>
-      <x>528</x>
-      <y>16</y>
+      <x>508</x>
+      <y>80</y>
       <width>44</width>
       <height>270</height>
      </rect>
@@ -188,8 +188,8 @@ border-radius:7px</string>
    <widget class="QLabel" name="label_nhanPhai">
     <property name="geometry">
      <rect>
-      <x>476</x>
-      <y>14</y>
+      <x>456</x>
+      <y>78</y>
       <width>52</width>
       <height>270</height>
      </rect>
@@ -205,9 +205,9 @@ border-radius:7px</string>
     <property name="geometry">
      <rect>
       <x>8</x>
-      <y>316</y>
+      <y>352</y>
       <width>625</width>
-      <height>80</height>
+      <height>57</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -219,8 +219,8 @@ border-radius:7px</string>
     <widget class="QLabel" name="label_forShowNotify">
      <property name="geometry">
       <rect>
-       <x>36</x>
-       <y>16</y>
+       <x>32</x>
+       <y>8</y>
        <width>563</width>
        <height>43</height>
       </rect>
@@ -229,7 +229,7 @@ border-radius:7px</string>
       <string notr="true">font: 75 bold 16pt &quot;Ubuntu&quot;;</string>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -246,11 +246,31 @@ border-radius:7px</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(0, 170, 0);
-font: 75 58pt &quot;Ubuntu&quot;;</string>
+     <string notr="true">font: 57 bold 80pt &quot;Ubuntu&quot;;
+color: rgb(0, 170, 127);</string>
     </property>
     <property name="text">
      <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_forShowName">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>4</y>
+      <width>521</width>
+      <height>63</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 170, 127);
+font: 75 bold 22pt &quot;Ubuntu&quot;;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

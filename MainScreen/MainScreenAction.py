@@ -73,6 +73,8 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         self.label_centerName.setText(self.__ConvertStringToUTF8String(NAME_CENTER))
         self.label_deviceName.setText(self.__ConvertStringToUTF8String(NAME_DEVICE))
 
+        self.nameStudentNeedAdd = ""
+
         self.__keyBoardOpened = False
 
     def __ShowKeyBoard(self, widgetTakeInput):
@@ -153,6 +155,10 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         self.SignalCloseApp.emit()
 
     def GoToAddFGPscreen(self, strMessage):
+        try:
+            self.addFGPscreenObj.label_forShowName.setText(self.showInfoScreenObj.nameStudentNeedAdd)
+        except:
+            pass
         if(self.currentStep == 1):
             self.addFGPscreenObj.ShowStepStudentInformationAnim(self.frameContainShowInfo)
             self.currentStep = 2
@@ -171,6 +177,10 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
             self.addFGPscreenObj.GetFGP()
         
     def GoToAddFaceScreen(self):
+        try:
+            self.addFaceScreenObj.label_forShowName.setText(self.showInfoScreenObj.nameStudentNeedAdd)
+        except:
+            pass
         if(self.currentStep == 2):
             self.addFaceScreenObj.ShowStepStudentInformationAnim(self.frameContainAddFGP)
             self.addFGPscreenObj.StopAll()
@@ -185,6 +195,7 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
 
     def GoToShowInfomation(self, inforString):
         self.showInfoScreenObj.ShowInformation(inforString)
+        
         if(self.currentStep == 2):
             self.showInfoScreenObj.ShowStepStudentInformationAnim(self.frameContainAddFGP)
             self.addFGPscreenObj.StopAll()

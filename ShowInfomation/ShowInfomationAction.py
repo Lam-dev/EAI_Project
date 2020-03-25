@@ -14,17 +14,27 @@ class ShowInfoScreen(QObject, Ui_Frame):
         self.setupUi(frameContain)
         self.label_forShowImage.setPixmap(QtGui.QPixmap("icon/iconImageRepresent.png"))
         self.ftpObj = FTPclient()
+        self.nameStudentNeedAdd = ""
 
     def ShowInformation(self, infoObj):
-        inforDict = json.loads(infoObj)
-        self.label_forShowName.setText(inforDict["ten"])
-        self.label_forShowDateOfBird.setText(inforDict["ngaySinh"])
-        self.label_forShowIDcardNumber.setText(inforDict["cmt"])
-        self.label_forShowComeFrom.setText(inforDict["que"])
-        self.label_forShowIDcardNumber.setText(inforDict["sdt"])
-        self.label_forShowEmail.setText(inforDict["email"])
-        # self.ftpObj.GetFileFromFTPserver("IDimage.jpg")
+        try:
+            inforDict = json.loads(infoObj)
+            self.nameStudentNeedAdd = self.__ConvertStringToUTF8String(inforDict["ten"])
+            self.label_forShowName.setText(self.nameStudentNeedAdd)
+            self.label_forShowDateOfBird.setText(inforDict["ngaySinh"])
+            self.label_forShowIDcardNumber.setText(inforDict["cmt"])
+            self.label_forShowComeFrom.setText(self.__ConvertStringToUTF8String(inforDict["que"]))
+            self.label_forShowIDcardNumber.setText(inforDict["sdt"])
+            self.label_forShowEmail.setText(inforDict["email"])
+            # self.ftpObj.GetFileFromFTPserver("IDimage.jpg")
+        except:
+            pass
 
+    def __ConvertStringToUTF8String(self, string):
+        x = []
+        for elem in string:
+            x.append(ord(elem))
+        return(bytes(x).decode("utf8", "ignore"))
 
     def ShowStepStudentInformationAnim(self, frameOfPreStep):
 
