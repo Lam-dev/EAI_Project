@@ -22,9 +22,10 @@ except:
 MAC                                                 = "1234"
 
 CODE_SEND_FGP_FEATURE                 = 5
-
 CODE_SENDED_FINGER_IMAGE              = 3
 CODE_SEND_FACE_IMAGE                  = 4
+CODE_SEND_NOTIFY_WRITE_CARD_SUCCESS   = 6
+
 
 MAC_ADDRESS                                         = "123456"#[0xC8, 0X93, 0X46, 0X4E,0X5D,0XD9]C8-93-46-4E-5D-D9
 IMAGE_TO_SEND_SERVER_PATH                           = "/StudentRecognize/SocketConnect/"
@@ -38,6 +39,7 @@ class SocketClient(QObject):
     SignalConnectNewServer = pyqtSignal(dict)
     SignalConnectNewFTP = pyqtSignal(dict)
     __SignalConnected = pyqtSignal()
+    SignalRequestWriteCard = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()
@@ -50,6 +52,7 @@ class SocketClient(QObject):
         self.callBackShowStatusConnectToSetting = object
 
         self.processReciptDataObj = ProcessReciptData()
+        self.processReciptDataObj.SignalRequestWriteCard.connect(self.SignalRequestWriteCard.emit)
 
         self.chuaXuLy = b''
 
@@ -67,6 +70,9 @@ class SocketClient(QObject):
         self.__SignalRecreateConnect.connect(self.__RecreateConnect)
         self.__FlagSendPingPong = True
         self.waitingForConnect = False
+
+    def SendNotifyWriteRFcardSuccessfully(self):
+        self.__SendDataViaSocket(self.__DungKhungGiaoTiepUART("", CODE_SEND_NOTIFY_WRITE_CARD_SUCCESS)[0])
 
     def ConnectNewFTP(self, dictInfor, callbackShowStatus):
         callbackShowStatus(self.ftpObj.ConnectNewFTPserver(dictInfor))

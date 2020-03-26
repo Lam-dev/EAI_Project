@@ -41,10 +41,10 @@ border-radius:7px</string>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>164</x>
-      <y>8</y>
-      <width>455</width>
-      <height>291</height>
+      <x>172</x>
+      <y>84</y>
+      <width>449</width>
+      <height>263</height>
      </rect>
     </property>
     <property name="text">
@@ -58,9 +58,9 @@ border-radius:7px</string>
     <property name="geometry">
      <rect>
       <x>22</x>
-      <y>328</y>
+      <y>362</y>
       <width>753</width>
-      <height>59</height>
+      <height>53</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -69,6 +69,26 @@ color: rgb(193, 0, 0);</string>
     </property>
     <property name="text">
      <string>Vui lòng đặt thẻ lên cảm biến</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_forShowName">
+    <property name="geometry">
+     <rect>
+      <x>136</x>
+      <y>8</y>
+      <width>521</width>
+      <height>63</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 170, 127);
+font: 75 bold 22pt &quot;Ubuntu&quot;;</string>
+    </property>
+    <property name="text">
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

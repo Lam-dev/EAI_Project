@@ -1,17 +1,18 @@
-from MainScreen.MainScreenUI     import Ui_Frame_containMainWindow
-from AddFace.AddFaceAction       import AddFaceScreen
-from ShowInfomation.ShowInfomationAction   import ShowInfoScreen
-from AddFGP.AddFGPaction         import AddFGPscreen         
-from SocketConnect.SocketClient  import SocketClient
-from PyQt5          import QtCore, QtGui
-from PyQt5.QtCore   import pyqtSlot, pyqtSignal,QTimer, QDateTime, Qt, QObject, QPointF, QPropertyAnimation, pyqtProperty, QSize
-from PyQt5          import QtWidgets
+from MainScreen.MainScreenUI                    import Ui_Frame_containMainWindow
+from AddFace.AddFaceAction                      import AddFaceScreen
+from ShowInfomation.ShowInfomationAction        import ShowInfoScreen
+from AddFGP.AddFGPaction                        import AddFGPscreen         
+from SocketConnect.SocketClient                 import SocketClient
+from PyQt5                                      import QtCore, QtGui
+from PyQt5.QtCore                               import pyqtSlot, pyqtSignal,QTimer, QDateTime, Qt, QObject, QPointF, QPropertyAnimation, pyqtProperty, QSize
+from PyQt5                                      import QtWidgets
 import json
 from    KeyBoard.KeyBoard                       import KeyBoard
-from Outdoor.OutDoor   import OutDoor
-from SettingScreen.SettingScreen    import SettingScreen
+from Outdoor.OutDoor                            import OutDoor
+from SettingScreen.SettingScreen                import SettingScreen
 from    CheckVersionScreen.CheckVersion         import CheckUpdate
-from    GetSettingFromJSON    import GetSetting 
+from    GetSettingFromJSON                      import GetSetting 
+from WriteRFcard.WriteRFcardScreenAction        import WriteRFcardAction
 
 try:
     NAME_SETTING_DICT = GetSetting.GetPersionalSetting()
@@ -55,6 +56,11 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         self.frameContainAddFGP = QtWidgets.QFrame(self.frame)
         self.frameContainAddFGP.setGeometry(QtCore.QRect(self.frame.width(), 0, 0, 0))
         self.addFGPscreenObj = AddFGPscreen(self.frameContainAddFGP)
+        
+        self.frameContainWriteRFcard = QtWidgets.QFrame(self.frame)
+        self.frameContainWriteRFcard.setGeometry(QtCore.QRect(self.frame.width(), 0, 0, 0))
+
+
 
         self.label_logo.mouseDoubleClickEvent = lambda event: self.__OpenOutdoor()
 
@@ -64,19 +70,23 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         self.socketObj.processReciptDataObj.SignalGoToAddFGP.connect(self.GoToAddFGPscreen)
         self.socketObj.processReciptDataObj.SignalGoToAddFace.connect(self.GoToAddFaceScreen)
         self.socketObj.processReciptDataObj.SignalShowInformation.connect(self.GoToShowInfomation)
+        self.socketObj.SignalRequestWriteCard.connect(self.GoToWriteRFcardScreen)
+
+        self.writeRFcardObj = WriteRFcardAction(self.frameContainWriteRFcard)
+        self.writeRFcardObj.SignalWriteToRFcardSuccessfully.connect(self.socketObj.SendNotifyWriteRFcardSuccessfully)
 
         self.addFGPscreenObj.SignalSendImageToServer.connect(self.socketObj.SendFingerImage)
         self.addFGPscreenObj.SignalSendFGPGetToServer.connect(self.socketObj.SendFingerFeature)
 
         self.addFaceScreenObj.SignalPictureTaked.connect(self.socketObj.SendTakedImage)
-
+            
         self.label_centerName.setText(self.__ConvertStringToUTF8String(NAME_CENTER))
         self.label_deviceName.setText(self.__ConvertStringToUTF8String(NAME_DEVICE))
 
         self.nameStudentNeedAdd = ""
 
         self.__keyBoardOpened = False
-
+    
     def __ShowKeyBoard(self, widgetTakeInput):
         if(not self.__keyBoardOpened):
             self.frameContainKeyBoard = QtWidgets.QFrame(self.frameContain)
@@ -154,6 +164,30 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
     def __OpenOutdoor(self):
         self.SignalCloseApp.emit()
 
+    def GoToWriteRFcardScreen(self, strMessage):
+        try:
+            self.writeRFcardObj.label_forShowName.setText(self.showInfoScreenObj.nameStudentNeedAdd)
+            self.writeRFcardObj.WriteIDcardNumberToRFcard(strMessage)
+        except:
+            pass
+        if(self.currentStep == 1):
+            self.writeRFcardObj.ShowStepStudentInformationAnim(self.frameContainShowInfo)
+            self.currentStep = 4
+
+        elif(self.currentStep == 3):
+            self.writeRFcardObj.ShowStepStudentInformationAnim(self.frameContainAddFace)
+            self.currentStep = 4
+            #self.addFaceScreenObj.cameraObj.StopReadImage()
+            self.addFaceScreenObj.StopTakePicture()
+
+        elif(self.currentStep == 2):
+            self.writeRFcardObj.ShowStepStudentInformationAnim(self.frameContainAddFGP)
+            self.addFGPscreenObj.StopAll()
+            self.currentStep = 4
+
+        elif(self.currentStep == 4):
+            pass
+
     def GoToAddFGPscreen(self, strMessage):
         try:
             self.addFGPscreenObj.label_forShowName.setText(self.showInfoScreenObj.nameStudentNeedAdd)
@@ -172,9 +206,16 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
             self.addFaceScreenObj.StopTakePicture()
             self.addFGPscreenObj.ListFingerNeedAdd(strMessage)
             self.addFGPscreenObj.GetFGP()
+
         elif(self.currentStep == 2):
             self.addFGPscreenObj.ListFingerNeedAdd(strMessage)
             self.addFGPscreenObj.GetFGP()
+
+        elif(self.currentStep == 4):
+            self.addFGPscreenObj.ShowStepStudentInformationAnim(self.frameContainWriteRFcard)
+            self.addFGPscreenObj.GetFGP()
+            self.writeRFcardObj.StopWriteToCard()
+            self.currentStep = 2
         
     def GoToAddFaceScreen(self):
         try:
@@ -193,6 +234,11 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         if(self.currentStep == 3):
             self.addFaceScreenObj.RetakePicture()
 
+        elif(self.currentStep == 4):
+            self.addFaceScreenObj.ShowStepStudentInformationAnim(self.frameContainWriteRFcard)
+            self.writeRFcardObj.StopWriteToCard()
+            self.currentStep = 3
+
     def GoToShowInfomation(self, inforString):
         self.showInfoScreenObj.ShowInformation(inforString)
         
@@ -204,6 +250,11 @@ class MainScreen(QObject, Ui_Frame_containMainWindow):
         if(self.currentStep == 3):
             self.showInfoScreenObj.ShowStepStudentInformationAnim(self.frameContainAddFace)
             self.addFaceScreenObj.StopTakePicture()
+            self.currentStep = 1
+
+        elif(self.currentStep == 4):
+            self.showInfoScreenObj.ShowStepStudentInformationAnim(self.frameContainWriteRFcard)
+            self.writeRFcardObj.StopWriteToCard()
             self.currentStep = 1
     
     def ShowVersionCheckScreen(self):

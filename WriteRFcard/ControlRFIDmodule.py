@@ -10,12 +10,36 @@ CODE_WRITE_FAIL = 4
 
 
 class ControlRFIDmudule(QObject):
-    
+
+    SignalNotReconizedStudent = pyqtSignal()
+    SignalWriteToCardSuccessfully = pyqtSignal()
     def __init__(self):
         QObject.__init__(self)
         self.uartObject = UART()
+        self.uartObject.StartTimerReadUARTdata()
         self.uartObject.SignalReciptedData.connect(self.ProcessReciptData)
         self.chuaXuLy = b''
+        self.lstStudent = []
+        self.lstByteWriteToCard = []
+        self.timerWriteToCard = QTimer(self)
+        self.timerWriteToCard.timeout.connect(lambda: self.SendRequestWriteToRFcard(self.lstByteWriteToCard))
+        self.numberToWrite = str
+        ## Test""""""
+        #self.timerSendWriteToCard = QTimer(self)
+        #self.timerSendWriteToCard.timeout.connect(lambda:self.WriteIDcardNumberToRFcard("21212121"))
+        #self.timerSendWriteToCard.start(2000)
+
+
+    def SetIDcarNumberToWriteToRFcard(self, strNumber):
+        self.lstByteWriteToCard.clear()
+        for charNumber in strNumber:
+            self.lstByteWriteToCard.append(ord(charNumber))
+
+    def StartWriteIDcardNumberToRFcard(self):
+        self.timerWriteToCard.start(1000)
+
+    def StopWriteIDcardNumberToRFcard(self):
+        self.timerWriteToCard.stop()
 
     """
     Tach xu ly du lieu nhan
@@ -27,31 +51,63 @@ class ControlRFIDmudule(QObject):
 
     def SwitchRequest(self, frame):
         try:
-            data, code = self.__CatLayPhanDataTrongFrame(khungNhan)
-            reciptObj = self.json2obj(data)
+            data, code = self.__CatLayPhanDataTrongFrame(frame)
+            #reciptObj = self.json2obj(data)
 
             if(code == CODE_DATA_IN_CARD):
-                pass
+                self.SearchStudent(data)
             elif(code == CODE_NOT_CARD):
-                pass
+                print("not card")
             elif(code == CODE_RESQUEST_WRITE_DATA_TO_CARD):
                 pass
             elif(code == CODE_WRITE_SUCCESSFUL):
-                pass
+                self.WriteToRFcardSuccessfully()
             elif(code == CODE_WRITE_FAIL):
-                pass
-    except:
+                print("fail")
+        except NameError as e:
+            print(e)
             pass
     
+    def WriteToRFcardSuccessfully(self):
+        self.SignalWriteToCardSuccessfully.emit()
+        self.StopWriteIDcardNumberToRFcard()
+
+    def SearchStudent(self, data):
+        IDcardNumber = self.ConvertListByteToString(data)
+        if(type(IDcardNumber) is bool):
+            self.SignalNotReconizedStudent.emit()
+            return
+        print(IDcardNumber)
+        try:
+            for student in self.lstStudent:
+                if(student.SoCMTND == IDcardNumber):
+                    self.SignalRecognizedStudent.emit(student)
+                    return
+            self.SignalNotReconizedStudent.emit()
+        except:
+            self.SignalNotReconizedStudent.emit()
+    
+    def ConvertListByteToString(self, lstByte):
+        try:
+            cardData = lstByte[4:len(lstByte)]  # frame tra ve co 4 byte dau la ma the, con lai la du lieu trong the
+            string = ""
+            for byte in cardData:
+                try:
+                    string += chr(byte)
+                except:
+                    pass
+            return string
+        except:
+            return False
+
     def SendRequestWriteToRFcard(self, data):
         self.uartObject.SendDataToUART(self.__BuildFrameToSend(data, CODE_RESQUEST_WRITE_DATA_TO_CARD)[0])
 
 
     def __CatLayPhanDataTrongFrame(self, frameNhan):
-
         code = frameNhan[3]
         chieuDaiDl = frameNhan[4] + frameNhan[5] * math.pow(2, 8)
-        return frameNhan[6, 6+chieuDaiDl], code
+        return frameNhan[6:6+int(chieuDaiDl)], code
     
     
 
@@ -73,36 +129,39 @@ class ControlRFIDmudule(QObject):
         for byte in byteArray:
             tong += byte
         
-        khungTruyen.append(byteArray)    
+        khungTruyen.extend(byteArray)
         tong = -(~tong) % 256
         khungTruyen.append(0x00)
         khungTruyen[len(khungTruyen)-1] = tong
         return bytes(khungTruyen), tong
-    
+        
 
     def __TachCacKhungTruyen(self, duLieu):
         if(duLieu == b''):
             return []
         self.chuaXuLy = self.chuaXuLy + duLieu
         lstKhungDL = []
-        for i in range(0, len(self.chuaXuLy)):
+        i = 0
+        while True:
+            if(i == len(self.chuaXuLy)):
+                break
             if( self.chuaXuLy[i:i+3].__str__().__contains__("ETM")):
                 try:
-                    chieuDaiDl = self.chuaXuLy[i+4] + self.chuaXuLy[i+5] * math.pow(2, 7)
+                    chieuDaiDl = self.chuaXuLy[i+4] + self.chuaXuLy[i+5] * math.pow(2, 8)
                     chieuDaiKhung = i + int(chieuDaiDl) + 7
                     if(chieuDaiKhung + i <= len(self.chuaXuLy)):
                         lstKhungDL.append(self.chuaXuLy[i:chieuDaiKhung])
-                        #self.chuaXuLy = self.chuaXuLy[chieuDaiKhung: len(self.chuaXuLy)]
-                        i = i + chieuDaiKhung
+                        self.chuaXuLy = self.chuaXuLy[chieuDaiKhung: len(self.chuaXuLy)]
+                        i = -1
                     else:
                         self.chuaXuLy = self.chuaXuLy[i: len(self.chuaXuLy)]
                         break
-                except:
+                except NameError as e:
                     self.chuaXuLy = self.chuaXuLy[i: len(self.chuaXuLy)]
+                    print(e)
                     break
+            i = i + 1
         return lstKhungDL
-
-
     """
     check sum mot frame
     """

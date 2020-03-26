@@ -14,11 +14,16 @@ except:
 
 class UART(QObject):
 
-    SignalReciptedData = pyqtSignal(list)
+    SignalReciptedData = pyqtSignal(bytes)
     
     def __init__(self):
         super().__init__()
-        #self.serObj = self.__UARTinit()
+        self.timerReadUARTdata = QTimer(self)
+        self.timerReadUARTdata.timeout.connect(self.ThreadReadUARTdata)
+        self.__UARTinit()
+
+    def StartTimerReadUARTdata(self):
+        self.timerReadUARTdata.start(1000)
 
     def __UARTinit(self):
         try:
@@ -36,6 +41,10 @@ class UART(QObject):
         thread = threading.Thread(target=self.__UARTlisten, args=(), daemon= True)
         thread.start()
 
+    def ThreadReadUARTdata(self):
+        thread = threading.Thread(target=self.__ReadUARTdata, args=(), daemon=True)
+        thread.start()
+
     def __UARTlisten(self):
         while True:
             self.serObj = self.__UARTinit()
@@ -44,17 +53,28 @@ class UART(QObject):
             if(type(self.serObj)is not bool):
                 while True:
                     try:
-                        data = self.serObj.readline()
-                        print("Khung Nhan = ", khungNhan)
-                        self.SignalReciptedData.emit(data)
-                        pass
-                    except:
-                        break
-
+                        if(self.serObj.inWaiting() > 0):
+                            data = self.serObj.read(1024)
     
+                            print("Khung Nhan = ", data)
+                            self.SignalReciptedData.emit(data)
+                            pass
+                    except:
+                        pass
+
+    def __ReadUARTdata(self):
+        try:
+            data = self.serObj.read(1024)
+            if(data == b''):
+                return
+            print("Khung Nhan = ", data)
+            self.SignalReciptedData.emit(data)
+        except:
+            self.serObj = self.__UARTinit()
+
+
     def SendDataToUART(self, frame):
         try:
             self.serObj.write(frame)
-
         except:
             pass
